@@ -7,11 +7,13 @@ const app = Vue.createApp({
     return {
       catFact: '',
       catPicUrl: '',
-      catFactLoading: false,
-      catPicUrlLoading: false,
+      catFactLoading: true,
+      catPicUrlLoading: true,
+      weatherDataLoading: true,
       airQuality:'Loading...',
       currentPlace: 'Loading...',
       currentCountry: '',
+      clock: '',
     }
   },
   methods: {
@@ -33,9 +35,26 @@ const app = Vue.createApp({
           this.catPicUrlLoading = false;
         })
     },
+    
+    startTime() {
+      const today = new Date();
+      let h = today.getHours();
+      let m = today.getMinutes();
+      let s = today.getSeconds();
+      m = checkTime(m);
+      s = checkTime(s);
+      clock =  h + ":" + m + ":" + s;
+      setTimeout(startTime, 1000);
+    },
+
+    checkTime(i) {
+      if (i < 10) {i = "0" + i}; 
+      return i;
+    },
 
 
     getWeatherData() {
+      this.weatherDataLoading = true;
       const successCallback = (position) => {
         console.log(position);
         fetch("https://api.weatherapi.com/v1/current.json?key=d988d52d87f943079de64335230312&q=" + position.coords.latitude + ", " + position.coords.longitude + "&aqi=yes")
@@ -45,6 +64,7 @@ const app = Vue.createApp({
             this.airQuality = data.current.air_quality.pm2_5
             this.currentPlace = data.location.name 
             this.currentCountry = data.location.country
+            this.weatherDataLoading = false;
           })
       };
       const errorCallback = (error) => {
@@ -61,6 +81,7 @@ const app = Vue.createApp({
     this.getCatFact()
     this.getCatPhoto()
     this.getWeatherData()
+    this.startTime()
   }
 })
 app.mount('#app')
