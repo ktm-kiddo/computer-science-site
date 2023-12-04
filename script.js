@@ -13,7 +13,6 @@ const app = Vue.createApp({
       airQuality:'Loading...',
       currentPlace: 'Loading...',
       currentCountry: '',
-      clock: '',
     }
   },
   methods: {
@@ -35,25 +34,10 @@ const app = Vue.createApp({
           this.catPicUrlLoading = false;
         })
     },
-    
-    startTime() {
-      const today = new Date();
-      let h = today.getHours();
-      let m = today.getMinutes();
-      let s = today.getSeconds();
-      m = checkTime(m);
-      s = checkTime(s);
-      clock =  h + ":" + m + ":" + s;
-      setTimeout(startTime, 1000);
-    },
-
-    checkTime(i) {
-      if (i < 10) {i = "0" + i}; 
-      return i;
-    },
-
 
     getWeatherData() {
+      this.airQuality = 'Loading...',
+      this.currentPlace = 'Loading...',
       this.weatherDataLoading = true;
       const successCallback = (position) => {
         console.log(position);

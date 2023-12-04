@@ -11,7 +11,6 @@
     <div class="topnav">
       <a class="active" href="#home">Home</a>
       <a href="about.html">About</a>
-      <a href="ads.html">Ads</a>
     </div>
 
     <h1>Home</h1>
@@ -35,7 +34,7 @@
         <h5>{{ currentPlace }}, {{ currentCountry }}</h5>
         <h2 class="big">{{ airQuality }}</h2>
         <p>Because all cats want to be healthy...</p>
-        <button v-on:click="getWeatherData()" v-bind:disabled='weatherDataLoading'>Get new photo!</button>
+        <button v-on:click="getWeatherData()" v-bind:disabled='weatherDataLoading'>Refresh</button>
       </div>
 
       <div class="clock-box">
