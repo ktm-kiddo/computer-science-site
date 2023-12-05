@@ -14,6 +14,7 @@ const app = Vue.createApp({
       currentPlace: 'Loading...',
       currentCountry: '',
       currentTime: "",
+      info: "";
     }
   },
   methods: {
@@ -100,3 +101,7 @@ const app = Vue.createApp({
   }
 })
 app.mount('#app')
+
+
+
+

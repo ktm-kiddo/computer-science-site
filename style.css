@@ -107,7 +107,7 @@ button:disabled {
 img {
   border-radius: 5%;
   max-height: 300px;
-  width: 100%;
+  width: 95%;
   padding-bottom: 15px;
 }
 
@@ -131,4 +131,39 @@ img {
 
 .big {
   font-weight: normal;
+}
+
+.info {
+  width: 95%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #fff9f0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color:#fff9f0;
+  font-family: monospace;
+}
+
+textarea {
+  width: 95%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff9f0;
+  resize: none;
+  margin: 8px 0;
+  font-family: monospace;
+}
+
+.submit {
+
+  margin: 25px 0 25px 0;
+}
+
+.coolcat {
+
+  margin: 10px 10px 10px 10px;
 }

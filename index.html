@@ -11,10 +11,10 @@
     <div class="topnav">
       <a class="active" href="#home">Home</a>
       <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
     </div>
 
     <h1>Home</h1>
-
     <div class="grid-container">
 
       <div class="fact-box">
@@ -25,7 +25,7 @@
 
       <div class="photo-box">
         <h3>Fun cat photo!</h3>
-        <img alt="Cat Photo" v-bind:src="catPicUrl">
+        <img alt="Loading..." v-bind:src="catPicUrl">
         <button v-on:click="getCatPhoto()" v-bind:disabled='catPicUrlLoading'>Get new photo!</button>
       </div>
 
