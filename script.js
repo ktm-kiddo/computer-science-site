@@ -14,7 +14,6 @@ const app = Vue.createApp({
       currentPlace: 'Loading...',
       currentCountry: '',
       currentTime: "",
-      info: "";
     }
   },
   methods: {
