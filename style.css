@@ -34,6 +34,11 @@ h1 {
   font-weight: bold;
 }
 
+.topnav a.active {
+  background-color: #ad9676;
+  color: #ffe3bd;
+}
+
 .fact-box {
 
   background-color: #ffe3bd;
