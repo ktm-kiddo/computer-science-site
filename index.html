@@ -36,11 +36,19 @@
         <button v-on:click="getWeatherData()" v-bind:disabled='weatherDataLoading'>Refresh</button>
       </div>
 
+      
       <div class="clock-box">
         <h3>Time</h3>
         <h2 class="big">{{ currentTime }}</h2>
       </div>
 
+      <div class="trivia">
+        <h3>Trivia!</h3>
+        <p>{{ triviaq }}</p>
+        <button v-on:click="truePressed" v-bind:class="trueButton" v-bind:disabled='triviaButtonDisabled'>True</button>
+        <button v-on:click="falsePressed" v-bind:class="falseButton" v-bind:disabled='triviaButtonDisabled'>False</button>
+        <button v-bind:disabled="newQuestionLoading"v-on:click="getTriviaQuestion">Get new question!</button>
+      </div>
 
 
 

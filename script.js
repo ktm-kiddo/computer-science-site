@@ -14,18 +14,65 @@ const app = Vue.createApp({
       currentPlace: 'Loading...',
       currentCountry: '',
       currentTime: "",
+      triviaq:"",
+      triviaa:"",
+      falseButton:"",
+      trueButton:"",
+      triviaButtonDisabled: true,
+      newQuestionLoading: true,
     }
   },
+  
   methods: {
+    
+    falsePressed(){
+      if (this.triviaa === "False") {
+        this.falseButton = "correct";
+        this.trueButton = "";
+        this.triviaButtonDisabled = true;
+      } else {
+        this.falseButton = "wrong";
+        this.trueButton = "";
+        this.triviaButtonDisabled = true;
+      }
+    },
+    
+    truePressed(){
+      if (this.triviaa === "True") {
+        this.trueButton = "correct";
+        this.falseButton = "";
+        this.triviaButtonDisabled = true;
+      } else {
+        this.trueButton = "wrong";
+        this.falseButton = "";
+        this.triviaButtonDisabled = true;
+      }
+    },
+    
+    getTriviaQuestion() {
+      this.newQuestionLoading = true;
+      fetch("https://opentdb.com/api.php?amount=1&difficulty=easy&type=boolean")
+        .then(response => response.json())
+        .then(data => {
+          this.triviaq = data.results[0].question;
+          this.triviaa = data.results[0].correct_answer;
+          this.falseButton = "";
+          this.trueButton = "";
+          this.triviaButtonDisabled = false;
+          this.newQuestionLoading = false;
+        })
+    },
+    
     getCatFact() {
       this.catFactLoading = true;
       fetch("https://catfact.ninja/fact")
-        .then(responsePhotoLink => responsePhotoLink.json())
+        .then(responseFact => responseFact.json())
         .then(data => {
           this.catFact = data.fact
           this.catFactLoading = false;
         })
     },
+    
     getCatPhoto() {
       this.catPicUrlLoading = true;
       fetch("https://api.thecatapi.com/v1/images/search")
@@ -96,7 +143,8 @@ const app = Vue.createApp({
     this.getCatFact()
     this.getCatPhoto()
     this.getWeatherData()
-    setInterval(this.showTime, 1000);
+    this.getTriviaQuestion()
+    setInterval(this.showTime, 1000)
   }
 })
 app.mount('#app')

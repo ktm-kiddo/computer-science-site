@@ -81,6 +81,16 @@ h1 {
   grid-row: 3 / span 1;
 }
 
+.trivia {
+  background-color: #ffe3bd;
+  padding: 15px;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px #c5ab87;
+  grid-column: 1 / span 1;
+  grid-row: 3 / span 2;
+}
+
 button {
 
   background-color: #ffe3bd;
@@ -89,6 +99,9 @@ button {
   border: 2px solid #c5ab87;
   cursor: pointer;
   font-family: monospace, monaco;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-bottom: 5px;
 }
 
 button:hover {
@@ -171,4 +184,28 @@ textarea {
 .coolcat {
 
   margin: 10px 10px 10px 10px;
+}
+
+.correct {
+  background-color:#88cd88;
+}
+
+.correct:hover {
+  background-color:#bbe2bb;
+}
+
+.correct:disabled {
+  background-color:#bbe2bb;
+}
+
+.wrong {
+  background-color: #d99696;
+}
+
+.wrong:hover{
+  background-color: #dfa9a9;
+}
+
+wrong:disabled{
+  background-color: #dfa9a9;
 }
