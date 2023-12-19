@@ -51,6 +51,7 @@ const app = Vue.createApp({
     
     getTriviaQuestion() {
       this.newQuestionLoading = true;
+      this.triviaButtonDisabled = true;
       fetch("https://opentdb.com/api.php?amount=1&difficulty=easy&type=boolean")
         .then(response => response.json())
         .then(data => {
