@@ -10,22 +10,22 @@ const app = Vue.createApp({
       catFactLoading: true,
       catPicUrlLoading: true,
       weatherDataLoading: true,
-      airQuality:'Loading...',
+      airQuality: 'Loading...',
       currentPlace: 'Loading...',
       currentCountry: '',
       currentTime: "",
-      triviaq:"",
-      triviaa:"",
-      falseButton:"",
-      trueButton:"",
+      triviaq: "",
+      triviaa: "",
+      falseButton: "",
+      trueButton: "",
       triviaButtonDisabled: true,
       newQuestionLoading: true,
     }
   },
-  
+
   methods: {
-    
-    falsePressed(){
+
+    falsePressed() {
       if (this.triviaa === "False") {
         this.falseButton = "correct";
         this.trueButton = "";
@@ -36,8 +36,8 @@ const app = Vue.createApp({
         this.triviaButtonDisabled = true;
       }
     },
-    
-    truePressed(){
+
+    truePressed() {
       if (this.triviaa === "True") {
         this.trueButton = "correct";
         this.falseButton = "";
@@ -48,7 +48,7 @@ const app = Vue.createApp({
         this.triviaButtonDisabled = true;
       }
     },
-    
+
     getTriviaQuestion() {
       this.newQuestionLoading = true;
       this.triviaButtonDisabled = true;
@@ -63,7 +63,7 @@ const app = Vue.createApp({
           this.newQuestionLoading = false;
         })
     },
-    
+
     getCatFact() {
       this.catFactLoading = true;
       fetch("https://catfact.ninja/fact")
@@ -73,7 +73,7 @@ const app = Vue.createApp({
           this.catFactLoading = false;
         })
     },
-    
+
     getCatPhoto() {
       this.catPicUrlLoading = true;
       fetch("https://api.thecatapi.com/v1/images/search")
@@ -85,47 +85,47 @@ const app = Vue.createApp({
     },
 
     showTime() {
-        // Getting current time and date
-        let time = new Date();
-        let hour = time.getHours();
-        let min = time.getMinutes();
-        let sec = time.getSeconds();
+      // Getting current time and date
+      let time = new Date();
+      let hour = time.getHours();
+      let min = time.getMinutes();
+      let sec = time.getSeconds();
+      am_pm = "AM";
+
+      // Setting time for 12 Hrs format
+      if (hour >= 12) {
+        if (hour > 12) hour -= 12;
+        am_pm = "PM";
+      } else if (hour == 0) {
+        hr = 12;
         am_pm = "AM";
+      }
 
-        // Setting time for 12 Hrs format
-        if (hour >= 12) {
-            if (hour > 12) hour -= 12;
-            am_pm = "PM";
-        } else if (hour == 0) {
-            hr = 12;
-            am_pm = "AM";
-        }
+      hour = hour < 10 ? "0" + hour : hour;
+      min = min < 10 ? "0" + min : min;
+      sec = sec < 10 ? "0" + sec : sec;
 
-        hour = hour < 10 ? "0" + hour : hour;
-        min = min < 10 ? "0" + min : min;
-        sec = sec < 10 ? "0" + sec : sec;
-
-        this.currentTime =
-            hour +
-            ":" +
-            min +
-            ":" +
-            sec +
-            am_pm;
+      this.currentTime =
+        hour +
+        ":" +
+        min +
+        ":" +
+        sec +
+        am_pm;
     },
 
     getWeatherData() {
       this.airQuality = 'Loading...',
-      this.currentPlace = 'Loading...',
-      this.weatherDataLoading = true;
+        this.currentPlace = 'Loading...',
+        this.weatherDataLoading = true;
       const successCallback = (position) => {
         console.log(position);
         fetch("https://api.weatherapi.com/v1/current.json?key=d988d52d87f943079de64335230312&q=" + position.coords.latitude + ", " + position.coords.longitude + "&aqi=yes")
           .then(response => response.json())
-          .then (data => {
+          .then(data => {
             console.log(data)
             this.airQuality = data.current.air_quality.pm2_5
-            this.currentPlace = data.location.name 
+            this.currentPlace = data.location.name
             this.currentCountry = data.location.country
             this.weatherDataLoading = false;
           })
@@ -134,7 +134,7 @@ const app = Vue.createApp({
         console.log(error);
       };
       navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
-      
+
     }
 
   },
