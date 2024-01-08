@@ -91,6 +91,16 @@ h1 {
   grid-row: 3 / span 2;
 }
 
+.weather {
+  background-color: #ffe3bd;
+  padding: 15px;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px #c5ab87;
+  grid-column: 1 / span 3;
+  grid-row: 5 / span 1;
+}
+
 button {
 
   background-color: #ffe3bd;
