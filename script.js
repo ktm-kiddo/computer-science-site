@@ -38,7 +38,7 @@ const app = Vue.createApp({
     },
 
     truePressed() {
-      if (this.triviaa === "True") {
+      if (this.triviaa == "True") {
         this.trueButton = "correct";
         this.falseButton = "";
         this.triviaButtonDisabled = true;
@@ -52,7 +52,7 @@ const app = Vue.createApp({
     getTriviaQuestion() {
       this.newQuestionLoading = true;
       this.triviaButtonDisabled = true;
-      fetch("https://opentdb.com/api.php?amount=1&difficulty=easy&type=boolean")
+      fetch("https://www.otriviata.com/api.php?amount=1&difficulty=easy&type=boolean")
         .then(response => response.json())
         .then(data => {
           this.triviaq = data.results[0].question;
