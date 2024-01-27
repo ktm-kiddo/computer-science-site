@@ -192,12 +192,18 @@ textarea {
   background-color: #fff9f0;
   resize: none;
   margin: 8px 0;
-  font-family: monospace;
+  font-family:monospace;
+}
+
+.block {
+  display: block;
+  margin: auto;
 }
 
 .submit {
-
-  margin: 25px 0 25px 0;
+  display: block;
+  margin: auto;
+  padding: 10px, 10px, 10px, 10px;con
 }
 
 .coolcat {

@@ -138,7 +138,6 @@ const app = Vue.createApp({
   },
 
   mounted() {
-    console.log('mounted!')
     this.getCatFact()
     this.getCatPhoto()
     this.getWeatherData()
