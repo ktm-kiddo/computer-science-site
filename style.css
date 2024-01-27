@@ -39,64 +39,39 @@ h1 {
   color: #ffe3bd;
 }
 
-.fact-box {
-
+.box {
   background-color: #ffe3bd;
   padding: 15px;
   margin: 20px;
   border-radius: 10px;
   box-shadow: 5px 5px 5px #c5ab87;
+}
+.fact-box {
   grid-column: 1 / span 1;
   grid-row: 1 / span 2;
 }
 
 .photo-box {
-
-  background-color: #ffe3bd;
-  padding: 15px;
-  margin: 20px;
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px #c5ab87;
   grid-column: 2 / span 2;
   grid-row: 1 / span 2;
 }
 
 .aqi-box {
-  background-color: #ffe3bd;
-  padding: 15px;
-  margin: 20px;
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px #c5ab87;
   grid-column: 3 / span 1;
   grid-row: 3 / span 2;
 }
 
 .clock-box {
-  background-color: #ffe3bd;
-  padding: 15px;
-  margin: 20px;
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px #c5ab87;
   grid-column: 2 / span 1;
   grid-row: 3 / span 1;
 }
 
-.trivia {
-  background-color: #ffe3bd;
-  padding: 15px;
-  margin: 20px;
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px #c5ab87;
+.trivia-box {
   grid-column: 1 / span 1;
   grid-row: 3 / span 2;
 }
 
-.weather {
-  background-color: #ffe3bd;
-  padding: 15px;
-  margin: 20px;
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px #c5ab87;
+.weather-box {
   grid-column: 1 / span 3;
   grid-row: 5 / span 1;
 }
@@ -133,10 +108,11 @@ button:disabled {
 }
 
 img {
-  border-radius: 5%;
   max-height: 300px;
-  width: 95%;
+  max-width: 95%;
   padding-bottom: 15px;
+  display: block;
+  margin: auto;
 }
 
 .grid-container {
@@ -145,6 +121,11 @@ img {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 220 px 220px 220px 220px;
   width: 100%;
+}
+
+.weather-grid {
+  display: flex;
+  justify-content: space-around;
 }
 
 .faded {

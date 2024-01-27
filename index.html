@@ -14,21 +14,22 @@
     </div>
 
     <h1>Home</h1>
+
     <div class="grid-container">
 
-      <div class="fact-box">
+      <div class="fact-box box">
         <h3>Fun cat fact!</h3>
         <p>{{ catFact }}</p>
         <button v-on:click="getCatFact()" v-bind:disabled='catFactLoading'>Get new fact!</button>
       </div>
 
-      <div class="photo-box">
+      <div class="photo-box box">
         <h3>Fun cat photo!</h3>
         <img alt="Loading..." v-bind:src="catPicUrl">
         <button v-on:click="getCatPhoto()" v-bind:disabled='catPicUrlLoading'>Get new photo!</button>
       </div>
 
-      <div class="aqi-box">
+      <div class="aqi-box box">
         <h3>AQI</h3>
         <h5>{{ currentPlace }}, {{ currentCountry }}</h5>
         <h2 class="big">{{ airQuality }}</h2>
@@ -36,24 +37,24 @@
         <button v-on:click="getWeatherData()" v-bind:disabled='weatherDataLoading'>Refresh</button>
       </div>
 
-      
-      <div class="clock-box">
+      <div class="clock-box box">
         <h3>Time</h3>
         <h2 class="big">{{ currentTime }}</h2>
       </div>
 
-      <div class="trivia">
+      <div class="trivia-box box">
         <h3>Trivia!</h3>
         <p>{{ triviaq }}</p>
         <button v-on:click="truePressed" v-bind:class="trueButton" v-bind:disabled='triviaButtonDisabled'>True</button>
-        <button v-on:click="falsePressed" v-bind:class="falseButton" v-bind:disabled='triviaButtonDisabled'>False</button>
-        <button v-bind:disabled="newQuestionLoading"v-on:click="getTriviaQuestion">Get new question!</button>
+        <button v-on:click="falsePressed" v-bind:class="falseButton"
+          v-bind:disabled='triviaButtonDisabled'>False</button>
+        <button v-bind:disabled="newQuestionLoading" v-on:click="getTriviaQuestion">Get new question!</button>
       </div>
 
-
-
-      <div class = "weather">
-        
+      <div class="weather-box box">
+        <div class="weather-grid">
+          <p>Hi</p>
+        </div>
       </div>
 
 

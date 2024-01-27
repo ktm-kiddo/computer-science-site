@@ -78,10 +78,8 @@ const app = Vue.createApp({
       this.catPicUrlLoading = true;
       fetch("https://api.thecatapi.com/v1/images/search")
         .then(response => response.json())
-        .then(data => {
-          this.catPicUrl = data[0].url
-          this.catPicUrlLoading = false;
-        })
+        .then(data => this.catPicUrl = data[0].url)
+        .then(this.catPicUrlLoading = false)
     },
 
     showTime() {
