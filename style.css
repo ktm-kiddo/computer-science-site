@@ -8,8 +8,15 @@ body {
   font-family: monospace;
   text-align: center;
 }
+
 h1 {
   color: Black;
+}
+
+.footer {
+  background-color: #c5ab87;
+  margin: auto;
+  padding: 15px;
 }
 
 .topnav {
@@ -36,10 +43,13 @@ h1 {
   font-weight: bold;
 }
 
-.topnav a.active {
+.topnav a:active {
   background-color: #ad9676;
   color: #ffe3bd;
 }
+
+
+
 
 .box {
   background-color: #ffe3bd;
@@ -48,6 +58,8 @@ h1 {
   border-radius: 10px;
   box-shadow: 5px 5px 5px #c5ab87;
 }
+
+
 .fact-box {
   grid-column: 1 / span 1;
   grid-row: 1 / span 2;
@@ -77,6 +89,9 @@ h1 {
   grid-column: 1 / span 3;
   grid-row: 5 / span 1;
 }
+
+
+
 
 button {
 
@@ -109,6 +124,9 @@ button:disabled {
   opacity: 0.6;
 }
 
+
+
+
 img {
   max-height: 300px;
   max-width: 95%;
@@ -116,6 +134,10 @@ img {
   display: block;
   margin: auto;
 }
+
+
+
+
 
 .grid-container {
   display: inline-grid;
@@ -129,6 +151,10 @@ img {
   display: flex;
   justify-content: space-around;
 }
+
+
+
+
 
 .faded {
   border: 1px solid #ddd;
@@ -178,6 +204,9 @@ textarea {
 
   margin: 10px 10px 10px 10px;
 }
+
+
+
 
 .correct {
   background-color:#88cd88;
