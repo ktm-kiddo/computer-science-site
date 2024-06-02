@@ -20,6 +20,9 @@ const app = Vue.createApp({
       trueButton: "",
       triviaButtonDisabled: true,
       newQuestionLoading: true,
+
+      currentWeatherImage: '',
+      currentTemp: '',
     }
   },
 
@@ -127,7 +130,10 @@ const app = Vue.createApp({
             this.airQuality = data.current.air_quality.pm2_5
             this.currentPlace = data.location.name
             this.currentCountry = data.location.country
+            this.currentWeatherImage = data.current.condition.icon
+            this.currentTemp = data.current.temp_c
             this.weatherDataLoading = false;
+        
           })
       };
       const errorCallback = (error) => {
