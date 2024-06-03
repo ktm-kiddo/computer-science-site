@@ -10,8 +10,6 @@ const app = Vue.createApp({
       catFactLoading: true,
       catPicUrlLoading: true,
       weatherDataLoading: true,
-      airQuality: 'Loading...',
-      currentPlace: 'Loading...',
       currentCountry: '',
       currentTime: "",
       triviaq: "",
@@ -21,8 +19,7 @@ const app = Vue.createApp({
       triviaButtonDisabled: true,
       newQuestionLoading: true,
 
-      currentWeatherImage: '',
-      currentTemp: '',
+      weatherData: 0,
     }
   },
 
@@ -123,17 +120,12 @@ const app = Vue.createApp({
         this.weatherDataLoading = true;
       const successCallback = (position) => {
         console.log(position);
-        fetch("https://api.weatherapi.com/v1/current.json?key=d988d52d87f943079de64335230312&q=" + position.coords.latitude + ", " + position.coords.longitude + "&aqi=yes")
+        fetch("https://api.weatherapi.com/v1/forecast.json?key=d988d52d87f943079de64335230312&q=" + position.coords.latitude + ", " + position.coords.longitude + "&aqi=yes" + '&alerts=no')
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            this.airQuality = data.current.air_quality.pm2_5
-            this.currentPlace = data.location.name
-            this.currentCountry = data.location.country
-            this.currentWeatherImage = data.current.condition.icon
-            this.currentTemp = data.current.temp_c
-            this.weatherDataLoading = false;
-        
+            this.weatherData = data;
+            console.log(this.weatherData)
           })
       };
       const errorCallback = (error) => {

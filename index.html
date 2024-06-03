@@ -31,8 +31,14 @@
 
       <div class="aqi-box box">
         <h3>AQI</h3>
-        <h5>{{ currentPlace }}, {{ currentCountry }}</h5>
-        <h2 class="big">{{ airQuality }}</h2>
+        <div v-if='weatherData != 0'>
+        <h5>{{ weatherData.location.name }}, {{ weatherData.location.country }}</h5>
+        <h2 class="big">{{ weatherData.current.air_quality.pm2_5 }}</h2>
+        </div>
+        <div v-else>
+        <h5>Loading...</h5>
+        <h2 class='big'>Loading...</h2></div>
+
         <p>Because all cats want to be healthy...</p>
         <button v-on:click="getWeatherData()" v-bind:disabled='weatherDataLoading'>Refresh</button>
       </div>
@@ -53,8 +59,8 @@
 
       <div class="weather-box box grid-container">
         <p class='weathertitle1'>Current</p>
-        <img class=weathericon1 :src='currentWeatherImage'>
-        <p class='weathertemp1'>{{ currentTemp }}°C</p>
+        <img v-if='weatherData != 0' class=weathericon1 :src='weatherData.current.condition.icon'>
+        <p v-if='weatherData != 0'class='weathertemp1'>{{ weatherData.current.temp_c }}°C</p>
       </div>
 
 
