@@ -32,12 +32,13 @@
       <div class="aqi-box box">
         <h3>AQI</h3>
         <div v-if='weatherData != 0'>
-        <h5>{{ weatherData.location.name }}, {{ weatherData.location.country }}</h5>
-        <h2 class="big">{{ weatherData.current.air_quality.pm2_5 }}</h2>
+          <h5>{{ weatherData.location.name }}, {{ weatherData.location.country }}</h5>
+          <h2 class="big">{{ weatherData.current.air_quality.pm2_5 }}</h2>
         </div>
         <div v-else>
-        <h5>Loading...</h5>
-        <h2 class='big'>Loading...</h2></div>
+          <h5>Loading...</h5>
+          <h2 class='big'>Loading...</h2>
+        </div>
 
         <p>Because all cats want to be healthy...</p>
         <button v-on:click="getWeatherData()" v-bind:disabled='weatherDataLoading'>Refresh</button>
@@ -58,25 +59,27 @@
       </div>
 
       <div class="weather-box box grid-container">
-        <p class='weathertitle1'>Current</p>
-        <img v-if='weatherData != 0' class=weathericon1 :src='weatherData.current.condition.icon'>
-        <p v-if='weatherData != 0'class='weathertemp1'>{{ weatherData.current.temp_c }}°C</p>
+        <div v-if='weatherData != 0'>
+          <p class='weathertitle1'>Current</p>
+          <img class=weathericon1 :src='weatherData.current.condition.icon'>
+          <p class='weathertemp1'>{{ weatherData.current.temp_c }}°C</p>
+        </div>
       </div>
 
 
 
-    <div class="footer">
-      We at mateo.lol aim to provide you with the 
-      <b>highest</b>
-      level of cat possible. If 
-      <b>anything</b>
-      is not quite cat enough for you, please reach out. Our dedicated team is always happy to help.
-      <p></p>
-      Mateo.lol, 2024, all rights reserved. Any unlawful use of this website will be frowned upon. 
+      <div class="footer">
+        We at mateo.lol aim to provide you with the
+        <b>highest</b>
+        level of cat possible. If
+        <b>anything</b>
+        is not quite cat enough for you, please reach out. Our dedicated team is always happy to help.
+        <p></p>
+        Mateo.lol, 2024, all rights reserved. Any unlawful use of this website will be frowned upon.
+      </div>
     </div>
-  </div>
-  <script src="https://unpkg.com/vue@3"></script>
-  <script src="script.js"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

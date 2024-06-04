@@ -86,7 +86,7 @@ h1 {
 }
 
 .weather-box {
-  grid-column: 1 / span 3;
+  grid-column: 1 / span 1;
   grid-row: 5 / span 1;
 }
 
@@ -142,7 +142,7 @@ img {
 .grid-container {
   display: inline-grid;
   gap: 10px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1;
   grid-template-rows: 220 px 220px 220px 220px;
   width: 90%;
 }
@@ -156,41 +156,9 @@ img {
   grid-column: 1 / span 1;
   grid-row: 2 / span 1;
 }
-.weathericon2 {
-  grid-column: 2 / span 1;
-  grid-row: 2 / span 1;
-}
-.weathericon3 {
-  grid-column: 3 / span 1;
-  grid-row: 2 / span 1;
-}
-.weathericon4 {
-  grid-column: 4 / span 1;
-  grid-row: 2 / span 1;
-}
-.weathericon5 {
-  grid-column: 5 / span 1;
-  grid-row: 2 / span 1;
-}
 
 .weathertitle1 {
   grid-column: 1 / span 1;
-  grid-row: 1 / span 1;
-}
-.weathertitle2 {
-  grid-column: 2 / span 1;
-  grid-row: 1 / span 1;
-}
-.weathertitle3 {
-  grid-column: 3 / span 1;
-  grid-row: 1 / span 1;
-}
-.weathertitle4 {
-  grid-column: 4 / span 1;
-  grid-row: 1 / span 1;
-}
-.weathertitle5 {
-  grid-column: 5 / span 1;
   grid-row: 1 / span 1;
 }
 
@@ -198,22 +166,6 @@ img {
 
 .weathertemp1 {
   grid-column: 1 / span 1;
-  grid-row: 3 / span 1;
-}
-.weathertemp2 {
-  grid-column: 2 / span 1;
-  grid-row: 3 / span 1;
-}
-.weathertemp3 {
-  grid-column: 3 / span 1;
-  grid-row: 3 / span 1;
-}
-.weathertemp4 {
-  grid-column: 4 / span 1;
-  grid-row: 3 / span 1;
-}
-.weathertemp5 {
-  grid-column: 5 / span 1;
   grid-row: 3 / span 1;
 }
 
