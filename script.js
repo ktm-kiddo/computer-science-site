@@ -123,9 +123,9 @@ const app = Vue.createApp({
         fetch("https://api.weatherapi.com/v1/forecast.json?key=d988d52d87f943079de64335230312&q=" + position.coords.latitude + ", " + position.coords.longitude + "&aqi=yes" + '&alerts=no')
           .then(response => response.json())
           .then(data => {
-            console.log(data)
             this.weatherData = data;
             console.log(this.weatherData)
+            this.weatherData.current.air_quality.pm2_5 = Math.round(this.weatherData.current.air_quality.pm2_5)
           })
       };
       const errorCallback = (error) => {
