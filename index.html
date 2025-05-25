@@ -335,7 +335,7 @@
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
     }
-    const savedTheme = localStorage.getItem(themeKey) || 'light';
+    const savedTheme = localStorage.getItem(themeKey) || 'dark';
     applyTheme(savedTheme);
     document.getElementById('themeSwitcher').value = savedTheme;
     document.getElementById('themeSwitcher').addEventListener('change', function () {
