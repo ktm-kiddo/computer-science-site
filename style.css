@@ -362,6 +362,165 @@
   --button-active-bg: #ff4800;
 }
 
+[data-theme="cupcake"] {
+  --bg-color: #fff0f8;
+  --text-color: #8b4ca8;
+  --header-color: #ff6b9d;
+  --footer-bg: #ffe4f7;
+  --topnav-bg: #ffb3ec;
+  --topnav-link: #fff;
+  --topnav-link-hover-bg: #ff85d8;
+  --topnav-link-hover: #fff;
+  --topnav-link-active-bg: #ff6b9d;
+  --topnav-link-active: #fff;
+  --box-bg: #ffe4f7;
+  --box-shadow: #ff85d8;
+  --button-bg: #ff6b9d;
+  --button-text: #fff;
+  --button-border: #ff85d8;
+  --button-hover-bg: #ff85d8;
+  --button-active-bg: #ffb3ec;
+  --input-bg: #fff9fe;
+  --input-border: #ffb3ec;
+  --correct-bg: #ff9bff;
+  --correct-hover-bg: #ffb3ec;
+  --wrong-bg: #ff6b9d;
+  --wrong-hover-bg: #ff85d8;
+}
+
+/* Cupcake Theme Rainbow Background Animation */
+[data-theme="cupcake"] body {
+  background: linear-gradient(45deg, 
+    #ff9a9e 0%, #fecfef 12.5%, #fecfef 25%, 
+    #c3f0ca 37.5%, #c3f0ca 50%, #ffc3a0 62.5%, 
+    #ffc3a0 75%, #ff9a9e 87.5%, #ff9a9e 100%);
+  background-size: 400% 400%;
+  animation: rainbowShift 8s ease infinite;
+  -webkit-animation: rainbowShift 8s ease infinite;
+}
+
+@keyframes rainbowShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@-webkit-keyframes rainbowShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Sprinkles Rain Animation Container */
+.sprinkles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 5000; /* Below welcome overlay but above content */
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+[data-theme="cupcake"] .sprinkles-container {
+  opacity: 1;
+}
+
+/* Individual Sprinkle Styles */
+.sprinkle {
+  position: absolute;
+  width: 16px; /* Increased from 8px */
+  height: 6px; /* Increased from 3px */
+  border-radius: 4px; /* Increased from 2px */
+  opacity: 0.8;
+  animation: sprinkleFall 3s linear infinite;
+  -webkit-animation: sprinkleFall 3s linear infinite;
+}
+
+.sprinkle:nth-child(1) { background: #ff6b9d; left: 5%; animation-delay: 0s; animation-duration: 3.2s; }
+.sprinkle:nth-child(2) { background: #ff85d8; left: 15%; animation-delay: 0.3s; animation-duration: 2.8s; }
+.sprinkle:nth-child(3) { background: #ffb3ec; left: 25%; animation-delay: 0.6s; animation-duration: 3.5s; }
+.sprinkle:nth-child(4) { background: #c3f0ca; left: 35%; animation-delay: 0.9s; animation-duration: 2.9s; }
+.sprinkle:nth-child(5) { background: #ffc3a0; left: 45%; animation-delay: 1.2s; animation-duration: 3.1s; }
+.sprinkle:nth-child(6) { background: #ff9a9e; left: 55%; animation-delay: 1.5s; animation-duration: 2.7s; }
+.sprinkle:nth-child(7) { background: #fecfef; left: 65%; animation-delay: 1.8s; animation-duration: 3.3s; }
+.sprinkle:nth-child(8) { background: #ff6b9d; left: 75%; animation-delay: 2.1s; animation-duration: 2.6s; }
+.sprinkle:nth-child(9) { background: #ff85d8; left: 85%; animation-delay: 2.4s; animation-duration: 3.4s; }
+.sprinkle:nth-child(10) { background: #ffb3ec; left: 95%; animation-delay: 2.7s; animation-duration: 3.0s; }
+.sprinkle:nth-child(11) { background: #c3f0ca; left: 10%; animation-delay: 0.4s; animation-duration: 2.8s; }
+.sprinkle:nth-child(12) { background: #ffc3a0; left: 20%; animation-delay: 0.8s; animation-duration: 3.2s; }
+.sprinkle:nth-child(13) { background: #ff9a9e; left: 30%; animation-delay: 1.1s; animation-duration: 2.9s; }
+.sprinkle:nth-child(14) { background: #fecfef; left: 40%; animation-delay: 1.4s; animation-duration: 3.1s; }
+.sprinkle:nth-child(15) { background: #ff6b9d; left: 50%; animation-delay: 1.7s; animation-duration: 2.7s; }
+.sprinkle:nth-child(16) { background: #ff85d8; left: 60%; animation-delay: 2.0s; animation-duration: 3.3s; }
+.sprinkle:nth-child(17) { background: #ffb3ec; left: 70%; animation-delay: 2.3s; animation-duration: 2.6s; }
+.sprinkle:nth-child(18) { background: #c3f0ca; left: 80%; animation-delay: 2.6s; animation-duration: 3.4s; }
+.sprinkle:nth-child(19) { background: #ffc3a0; left: 90%; animation-delay: 0.2s; animation-duration: 3.0s; }
+.sprinkle:nth-child(20) { background: #ff9a9e; left: 12%; animation-delay: 0.5s; animation-duration: 2.8s; }
+
+@keyframes sprinkleFall {
+  0% {
+    top: -10px;
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    opacity: 0.8;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100vh;
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes sprinkleFall {
+  0% {
+    top: -10px;
+    -webkit-transform: rotate(0deg);
+    opacity: 0.8;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100vh;
+    -webkit-transform: rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Cupcake Theme Button Sparkle Effect */
+[data-theme="cupcake"] button:hover {
+  background-color: var(--button-hover-bg);
+  border-color: var(--button-hover-bg);
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(255, 107, 157, 0.6), 0 0 25px rgba(255, 133, 216, 0.4);
+  animation: sparkle 0.6s ease-in-out;
+  -webkit-animation: sparkle 0.6s ease-in-out;
+}
+
+@keyframes sparkle {
+  0%, 100% { box-shadow: 0 0 15px rgba(255, 107, 157, 0.6), 0 0 25px rgba(255, 133, 216, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(255, 107, 157, 0.8), 0 0 35px rgba(255, 133, 216, 0.6), 0 0 45px rgba(255, 179, 236, 0.4); }
+}
+
+@-webkit-keyframes sparkle {
+  0%, 100% { box-shadow: 0 0 15px rgba(255, 107, 157, 0.6), 0 0 25px rgba(255, 133, 216, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(255, 107, 157, 0.8), 0 0 35px rgba(255, 133, 216, 0.6), 0 0 45px rgba(255, 179, 236, 0.4); }
+}
+
 /* ========== LAYOUT & MODULE STYLES ========== */
 html {
   height: 100%;
