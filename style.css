@@ -969,4 +969,41 @@ textarea {
   font-style: italic;
 }
 
-/* ...existing code for other styles like .edit-panel, .widget-controls etc. */
+/* Loading Animation Styles */
+#loading-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it's on top of everything */
+  opacity: 1;
+  transition: opacity 1s ease-out; /* Animation for fade out */
+}
+
+#loading-animation.hidden {
+  opacity: 0;
+  pointer-events: none; /* Disable interaction when hidden */
+}
+
+.loading-text {
+  font-size: 3em; /* Adjust size as needed */
+  color: var(--header-color);
+  font-family: monospace; /* Or your preferred font */
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+}

@@ -429,8 +429,8 @@ const Home = {
     // Quote of the Day Methods
     getQuote() {
       this.quoteLoading = true;
-      // Using ZenQuotes API for today's quote
-      fetch("https://zenquotes.io/api/today", { mode: 'cors' }) 
+      // Using ZenQuotes API for today's quote via a CORS proxy
+      fetch("https://api.allorigins.win/raw?url=https://zenquotes.io/api/today") 
         .then(response => {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -515,6 +515,19 @@ const Home = {
     this.loadQuote(); // Load quote
     this.loadTodos(); // Load todos
     setInterval(this.showTime, 1000);
+
+    // Inject CSS to fix to-do button hover issue
+    const style = document.createElement('style');
+    style.textContent = `
+      .todo-add-btn, .todo-remove-btn {
+        /* Ensure padding and border are included in the element's total width and height */
+        box-sizing: border-box;
+        /* Apply a transparent border by default to reserve space. */
+        /* If your hover effect uses a border thicker than 1px, adjust this value. */
+        border: 1px solid transparent;
+      }
+    `;
+    document.head.appendChild(style);
   }
 };
 // --- About Page as Vue Component ---
@@ -632,6 +645,22 @@ const app = Vue.createApp({
 });
 app.use(router);
 app.mount('#app');
+
+// Loading Animation Logic
+window.addEventListener('load', () => {
+  const loadingAnimation = document.getElementById('loading-animation');
+  if (loadingAnimation) {
+    // Wait a bit for content to potentially render, then fade out
+    setTimeout(() => {
+      loadingAnimation.classList.add('hidden');
+    }, 500); // Adjust delay as needed
+
+    // Optional: Remove the loading animation from DOM after transition
+    loadingAnimation.addEventListener('transitionend', () => {
+      loadingAnimation.remove();
+    });
+  }
+});
 
 // --- Theme Switcher logic (unchanged) ---
 const themeKey = 'theme';
