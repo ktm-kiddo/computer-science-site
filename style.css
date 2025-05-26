@@ -393,6 +393,9 @@ h1 {
 
 /* Top nav */
 .topnav {
+  display: flex;
+  align-items: center; /* Vertically aligns items */
+  gap: 10px; /* Adds some space between items */
   background-color: var(--topnav-bg);
   overflow: hidden;
   position: -webkit-sticky;
@@ -424,9 +427,56 @@ h1 {
   color: var(--topnav-link-active);
 }
 
+.topnav .edit-btn {
+  /* Optional: if you want the button to take remaining space or specific margins */
+  /* margin-left: auto; /* Pushes button to the right of links */
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--button-border);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: monospace;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.topnav .edit-btn:hover {
+  background-color: var(--button-hover-bg);
+}
+
 .theme-switcher {
+  -webkit-appearance: none; /* Remove default Safari styling */
+  appearance: none; /* Standard property */
   float: right;
-  margin: 8px;
+  margin: 8px; /* Keep existing margin */
+  padding: 8px 12px; /* Adjusted padding for consistency, you might need to tweak this */
+  /* Add padding-right if you plan to add a custom arrow, e.g., padding: 8px 30px 8px 12px; */
+  border-radius: 8px;
+  border: 2px solid var(--button-border);
+  background-color: var(--box-bg); /* Explicitly set background-color */
+  color: var(--button-text);
+  font-size: 1em; /* Ensure font size is applied */
+  font-family: monospace, monospace; /* Ensure font family is applied */
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.06);
+  transition: border 0.2s, background 0.2s, color 0.2s;
+  outline: none;
+  cursor: pointer;
+  height: auto; /* Or set a specific height if needed, e.g., 38px, to match other inputs/buttons */
+  line-height: normal; /* Reset line-height to allow padding to work as expected */
+  /* If you want a custom dropdown arrow, you'd add it here using background-image */
+  /* Example for a simple arrow (needs an actual SVG or image):
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  */
+}
+
+.theme-switcher:focus,
+.theme-switcher:hover {
+  border-color: var(--button-hover-bg);
+  background: var(--button-hover-bg);
+  color: var(--button-text);
 }
 
 /* ===== Responsive grid ===== */
@@ -482,13 +532,85 @@ h1 {
   width: 100%;
   height: auto;
   max-width: 100%;
-  max-height: 220px;
+  /* max-height: 220px; */ /* This will be controlled by .photo-content-area for cat photo */
   object-fit: contain;
   border-radius: 8px;
   display: block;
-  margin: 0 auto 15px auto;
+  margin: 0 auto 15px auto; /* General margin for images in boxes */
   box-sizing: border-box;
 }
+
+/* Specific styling for the cat photo area */
+.photo-content-area {
+  width: 100%;
+  /* height: 220px; */ /* Removed fixed height, will be controlled by inline style (aspect-ratio or fallback height) */
+  min-height: 150px; /* Add a minimum height so it doesn't collapse if aspect-ratio isn't set yet */
+  background-color: var(--input-bg); 
+  border: 1px dashed var(--button-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 15px auto; /* Centering and bottom margin */
+  border-radius: 8px;
+  overflow: hidden; 
+  box-sizing: border-box;
+}
+
+.photo-content-area img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 0; /* Image itself doesn't need radius if container has it and overflow hidden */
+  margin: 0; /* Reset margin for image inside this container */
+}
+
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column; /* Stack spinner and text */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--text-color);
+  opacity: 0.8; /* Slightly transparent text */
+}
+
+.photo-placeholder.error {
+  /* Use --wrong-bg for text color in error state, or a specific error text color variable if you add one */
+  color: var(--wrong-bg); 
+  opacity: 1.0;
+}
+
+.photo-placeholder .placeholder-text {
+  padding: 5px;
+  font-size: 0.9em;
+}
+
+/* New style for the wrapper of spinner and text */
+.loading-indicator-wrapper {
+  display: flex;
+  flex-direction: column; /* Stack spinner and text vertically */
+  align-items: center;   /* Center spinner and text horizontally */
+  justify-content: center; /* Center them vertically within this wrapper */
+}
+
+.photo-placeholder .spinner {
+  border: 4px solid var(--button-hover-bg); /* Lighter part of spinner */
+  border-top: 4px solid var(--button-text); /* Darker, moving part of spinner */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px; /* Space between spinner and text */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 
 .aqi-box,
 .photo-box,
@@ -618,19 +740,31 @@ textarea {
 }
 
 .theme-switcher {
+  -webkit-appearance: none; /* Remove default Safari styling */
+  appearance: none; /* Standard property */
   float: right;
-  margin: 8px;
-  padding: 8px 20px;
+  margin: 8px; /* Keep existing margin */
+  padding: 8px 12px; /* Adjusted padding for consistency, you might need to tweak this */
+  /* Add padding-right if you plan to add a custom arrow, e.g., padding: 8px 30px 8px 12px; */
   border-radius: 8px;
   border: 2px solid var(--button-border);
-  background: var(--box-bg);
+  background-color: var(--box-bg); /* Explicitly set background-color */
   color: var(--button-text);
-  font-size: 1em;
-  font-family: monospace, monospace;
+  font-size: 1em; /* Ensure font size is applied */
+  font-family: monospace, monospace; /* Ensure font family is applied */
   box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.06);
   transition: border 0.2s, background 0.2s, color 0.2s;
   outline: none;
   cursor: pointer;
+  height: auto; /* Or set a specific height if needed, e.g., 38px, to match other inputs/buttons */
+  line-height: normal; /* Reset line-height to allow padding to work as expected */
+  /* If you want a custom dropdown arrow, you'd add it here using background-image */
+  /* Example for a simple arrow (needs an actual SVG or image):
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  */
 }
 
 .theme-switcher:focus,
@@ -657,4 +791,106 @@ textarea {
 .wrong:hover,
 .wrong:disabled {
   background-color: var(--wrong-hover-bg) !important;
+}
+
+/* ===== Edit Layout Panel Styles ===== */
+.edit-panel {
+  background-color: var(--box-bg); /* Use box background for consistency */
+  padding: 1rem;
+  margin: 1rem auto; /* Center panel and add some margin */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--box-shadow); /* Subtle shadow */
+  max-width: 90%; /* Control max width */
+  box-sizing: border-box;
+}
+
+.edit-panel h3 {
+  color: var(--header-color);
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.widget-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem; /* Space between checkboxes */
+  justify-content: center; /* Center checkboxes if they don't fill the row */
+}
+
+.widget-checkboxes label {
+  background-color: var(--button-bg); /* Use button background for label */
+  color: var(--button-text);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--button-border);
+  cursor: pointer;
+  display: inline-flex; /* Align checkbox and text nicely */
+  align-items: center;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.widget-checkboxes label:hover {
+  background-color: var(--button-hover-bg);
+  border-color: var(--button-hover-bg);
+}
+
+.widget-checkboxes input[type="checkbox"] {
+  margin-right: 0.5rem;
+  accent-color: var(--header-color); /* Use header color for checkbox tick/fill */
+  /* For better cross-browser custom styling, more complex CSS or JS might be needed,
+     but accent-color is a good modern start. */
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Style for the edit button in the topnav if not already themed */
+.topnav .edit-btn {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--button-border);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: monospace;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.topnav .edit-btn:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* Widget controls in edit mode */
+.widget-controls {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 5px;
+  z-index: 10; /* Ensure controls are above widget content */
+}
+
+.widget-controls .move-btn,
+.widget-controls .remove-btn {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--button-border);
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  line-height: 26px; /* Center icon vertically */
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.widget-controls .move-btn:hover,
+.widget-controls .remove-btn:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.widget-controls .move-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
