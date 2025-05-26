@@ -390,13 +390,24 @@
 
 /* Cupcake Theme Rainbow Background Animation */
 [data-theme="cupcake"] body {
+  background: -webkit-linear-gradient(45deg, 
+    #ff9a9e 0%, #fecfef 12.5%, #fecfef 25%, 
+    #c3f0ca 37.5%, #c3f0ca 50%, #ffc3a0 62.5%, 
+    #ffc3a0 75%, #ff9a9e 87.5%, #ff9a9e 100%);
   background: linear-gradient(45deg, 
     #ff9a9e 0%, #fecfef 12.5%, #fecfef 25%, 
     #c3f0ca 37.5%, #c3f0ca 50%, #ffc3a0 62.5%, 
     #ffc3a0 75%, #ff9a9e 87.5%, #ff9a9e 100%);
+  -webkit-background-size: 400% 400%;
   background-size: 400% 400%;
-  animation: rainbowShift 8s ease infinite;
   -webkit-animation: rainbowShift 8s ease infinite;
+  animation: rainbowShift 8s ease infinite;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
 }
 
 @keyframes rainbowShift {
@@ -432,12 +443,15 @@
 /* Individual Sprinkle Styles */
 .sprinkle {
   position: absolute;
-  width: 16px; /* Increased from 8px */
-  height: 6px; /* Increased from 3px */
-  border-radius: 4px; /* Increased from 2px */
+  width: 16px;
+  height: 6px;
+  border-radius: 4px;
   opacity: 0.8;
-  animation: sprinkleFall 3s linear infinite;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
   -webkit-animation: sprinkleFall 3s linear infinite;
+  animation: sprinkleFall 3s linear infinite;
+  will-change: transform;
 }
 
 .sprinkle:nth-child(1) { background: #ff6b9d; left: 5%; animation-delay: 0s; animation-duration: 3.2s; }
@@ -461,11 +475,11 @@
 .sprinkle:nth-child(19) { background: #ffc3a0; left: 90%; animation-delay: 0.2s; animation-duration: 3.0s; }
 .sprinkle:nth-child(20) { background: #ff9a9e; left: 12%; animation-delay: 0.5s; animation-duration: 2.8s; }
 
-@keyframes sprinkleFall {
+@-webkit-keyframes sprinkleFall {
   0% {
     top: -10px;
-    transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(0deg);
+    transform: translate3d(-50%, 0, 0) rotate(0deg);
     opacity: 0.8;
   }
   10% {
@@ -476,16 +490,17 @@
   }
   100% {
     top: 100vh;
-    transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(360deg);
+    transform: translate3d(-50%, 0, 0) rotate(360deg);
     opacity: 0;
   }
 }
 
-@-webkit-keyframes sprinkleFall {
+@keyframes sprinkleFall {
   0% {
     top: -10px;
-    -webkit-transform: rotate(0deg);
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(0deg);
+    transform: translate3d(-50%, 0, 0) rotate(0deg);
     opacity: 0.8;
   }
   10% {
@@ -496,7 +511,8 @@
   }
   100% {
     top: 100vh;
-    -webkit-transform: rotate(360deg);
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(360deg);
+    transform: translate3d(-50%, 0, 0) rotate(360deg);
     opacity: 0;
   }
 }
@@ -505,10 +521,12 @@
 [data-theme="cupcake"] button:hover {
   background-color: var(--button-hover-bg);
   border-color: var(--button-hover-bg);
+  -webkit-transform: scale(1.02);
   transform: scale(1.02);
+  -webkit-box-shadow: 0 0 15px rgba(255, 107, 157, 0.6), 0 0 25px rgba(255, 133, 216, 0.4);
   box-shadow: 0 0 15px rgba(255, 107, 157, 0.6), 0 0 25px rgba(255, 133, 216, 0.4);
-  animation: sparkle 0.6s ease-in-out;
   -webkit-animation: sparkle 0.6s ease-in-out;
+  animation: sparkle 0.6s ease-in-out;
 }
 
 @keyframes sparkle {
@@ -933,20 +951,102 @@ textarea {
 /* ===== Feedback styles for quiz/trivia ===== */
 .correct {
   background-color: var(--correct-bg) !important;
+  box-shadow: 0 0 8px var(--correct-bg) !important;
+  color: #fff !important;
+  border: 2px solid var(--correct-hover-bg) !important;
+  position: relative;
+  z-index: 1;
 }
 
-.correct:hover,
-.correct:disabled {
-  background-color: var(--correct-hover-bg) !important;
+.correct::before {
+  content: "✓";
+  position: absolute;
+  right: 45px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #00ff00; /* Bright green */
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: feedbackIcon 1s ease-out;
+}
+
+.correct::after {
+  content: "Correct!";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #00ff00; /* Bright green */
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: feedbackText 1s ease-out;
 }
 
 .wrong {
   background-color: var(--wrong-bg) !important;
+  box-shadow: 0 0 8px var(--wrong-bg) !important;
+  color: #fff !important;
+  border: 2px solid var(--wrong-hover-bg) !important;
+  position: relative;
+  z-index: 1;
 }
 
-.wrong:hover,
-.wrong:disabled {
-  background-color: var(--wrong-hover-bg) !important;
+.wrong::before {
+  content: "✕";
+  position: absolute;
+  right: 55px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #ff3333; /* Bright red */
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: feedbackIcon 1s ease-out;
+}
+
+.wrong::after {
+  content: "Incorrect!";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #ff3333; /* Bright red */
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: feedbackText 1s ease-out;
+}
+
+@keyframes feedbackIcon {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+@keyframes feedbackText {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
 }
 
 /* ===== Edit Layout Panel Styles ===== */
