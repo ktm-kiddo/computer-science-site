@@ -360,12 +360,6 @@
   --button-border: #ffb66c;
   --button-hover-bg: #fff0e5;
   --button-active-bg: #ff4800;
-  --input-bg: #fff0e5;
-  --input-border: #ffb66c;
-  --correct-bg: #ffb66c;
-  --correct-hover-bg: #ff4800;
-  --wrong-bg: #d7263d;
-  --wrong-hover-bg: #ffb66c;
 }
 
 /* ========== LAYOUT & MODULE STYLES ========== */
@@ -379,6 +373,8 @@ body {
   color: var(--text-color);
   font-family: monospace;
   text-align: center;
+  min-height: 100vh; /* Ensure body takes at least full viewport height */
+  margin: 0; /* Remove default body margin */
 }
 
 h1 {
@@ -666,17 +662,18 @@ button {
   margin-right: 5px;
   margin-left: 5px;
   margin-bottom: 5px;
-  transition: background 0.2s;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.2s; /* Added border-color to transition */
 }
 
 button:hover {
   background-color: var(--button-hover-bg);
-  border: 2px solid var(--button-border);
+  border-color: var(--button-hover-bg); /* Ensure border color changes but width/style from base remains */
+  transform: scale(1.02); 
 }
 
 button:active {
   background-color: var(--button-active-bg);
-  border: 2px solid var(--button-border);
+  border: 2px solid var(--button-border); /* This border is consistent with the base button style */
 }
 
 button:disabled {
@@ -831,7 +828,7 @@ textarea {
 
 .widget-checkboxes label:hover {
   background-color: var(--button-hover-bg);
-  border-color: var(--button-hover-bg);
+  border-color: var(--button-hover-bg); 
 }
 
 .widget-checkboxes input[type="checkbox"] {
@@ -847,10 +844,6 @@ textarea {
 /* --- Quote Widget Styles --- */
 
 /* --- To-Do List Widget Styles --- */
-.todo-box {
-  /* Inherits general .box styling */
-}
-
 .todo-form {
   display: flex; 
   margin-bottom: 15px; 
@@ -858,39 +851,52 @@ textarea {
 
 .todo-input {
   flex-grow: 1; 
-  padding: 10px 12px; /* Adjusted padding for a more standard input field height */
-  border: 1px solid var(--input-border-color);
+  padding: 10px 12px;
+  border: 1px solid var(--input-border); 
   border-radius: 4px 0 0 4px; 
-  background-color: var(--input-bg-color);
-  color: var(--input-text-color);
-  font-size: 1em; /* Ensure font size is consistent */
-  line-height: 1.5; /* Improve text alignment within the input */
+  background-color: var(--input-bg); 
+  color: var(--text-color); 
+  font-size: 1em;
+  line-height: 1.5;
 }
 .todo-input::placeholder {
-  color: var(--input-placeholder-color);
+  color: var(--text-color); 
+  opacity: 0.7;
 }
 .todo-input:focus {
   outline: none;
-  border-color: var(--button-bg-color); 
-  box-shadow: 0 0 0 0.2rem var(--button-bg-color-transparent); /* Bootstrap-like focus glow */
+  border-color: var(--button-hover-bg); /* Use a hover color for focus border */
+  box-shadow: 0 0 0 2px var(--button-hover-bg); /* Simpler focus ring using hover background */
 }
 
 
 .todo-add-btn {
   padding: 10px 15px; 
-  border: 1px solid var(--button-bg-color);
+  border: 1px solid var(--button-bg); 
   border-left: none; 
-  background-color: var(--button-bg-color);
-  color: var(--button-text-color);
+  background-color: var(--button-bg); 
+  color: var(--button-text); 
   cursor: pointer;
   border-radius: 0 4px 4px 0; 
-  font-size: 1.2em; /* Make the "+" slightly larger */
-  line-height: 1.5; /* Align with input field text */
+  font-size: 1.2em;
+  line-height: 1.5;
   margin-top: 0; 
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 .todo-add-btn:hover {
-  background-color: var(--button-hover-bg-color);
+  background-color: var(--button-hover-bg); 
+  border-color: var(--button-hover-bg); /* Ensure border color changes with background */
+  transform: scale(1.02); 
+}
+
+.todo-add-btn:active { /* NEW RULE */
+  background-color: var(--button-active-bg);
+  /* Maintain its 1px border width, using a consistent active border color */
+  border-top: 1px solid var(--button-border); 
+  border-right: 1px solid var(--button-border);
+  border-bottom: 1px solid var(--button-border);
+  border-left: none; /* Explicitly maintain no border on the left */
+  transform: scale(0.98); /* Consistent 'pressed' feedback */
 }
 
 .todo-list {
@@ -905,15 +911,16 @@ textarea {
 .todo-item {
   display: flex;
   align-items: center;
-  padding: 10px 8px; /* Consistent padding */
-  border-bottom: 1px solid var(--box-border-color);
+  padding: 10px 8px; 
+  border-bottom: 1px solid var(--button-border); /* Using button-border for consistency, or define a specific --box-border-color */
   transition: background-color 0.15s ease-in-out; 
 }
 .todo-item:last-child {
   border-bottom: none; 
 }
 .todo-item:hover {
-  background-color: var(--box-hover-bg-color); 
+  background-color: var(--box-bg); 
+  filter: brightness(95%); 
 }
 
 
@@ -937,30 +944,40 @@ textarea {
 
 .todo-item.completed .todo-text {
   text-decoration: line-through;
-  color: var(--text-color-disabled);
-  font-style: italic; /* Optional: further distinguish completed items */
+  color: var(--text-color); 
+  opacity: 0.6;
+  font-style: italic;
 }
 
 .todo-remove-btn {
   background: none;
   border: none;
-  color: var(--danger-color);
-  font-size: 1.4em; /* Slightly larger for easier interaction */
+  color: var(--wrong-bg); 
+  font-size: 1.4em; 
   line-height: 1; 
   cursor: pointer;
   padding: 0 5px; 
-  margin-left: 8px; /* Space between text and remove button */
+  margin-left: 8px; 
   margin-top: 0; 
-  transition: color 0.15s ease-in-out;
-  flex-shrink: 0; /* Prevent button from shrinking */
+  transition: color 0.15s ease-in-out, transform 0.15s ease-in-out; 
+  flex-shrink: 0; 
 }
 .todo-remove-btn:hover {
-  color: var(--danger-hover-color);
+  color: var(--wrong-hover-bg); 
+  border: none; 
+  transform: scale(1.02); 
+}
+
+.todo-remove-btn:active { /* NEW RULE */
+  color: var(--wrong-hover-bg); /* Maintain hover color or use a specific active color */
+  border: none; /* Explicitly maintain no border */
+  transform: scale(0.98); /* Consistent 'pressed' feedback */
 }
 
 .todo-empty-message {
   text-align: center;
-  color: var(--text-color-secondary);
+  color: var(--text-color); 
+  opacity: 0.7;
   padding: 20px 0; 
   flex-grow: 1;
   display: flex;
@@ -975,14 +992,15 @@ textarea {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh; /* Use viewport height for better Safari compatibility */
   background-color: var(--bg-color);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999; /* Ensure it's on top of everything */
   opacity: 1;
-  transition: opacity 1s ease-out; /* Animation for fade out */
+  transition: opacity 1s ease-out;
+  -webkit-transition: opacity 1s ease-out; /* Safari prefix */
 }
 
 #loading-animation.hidden {
@@ -995,15 +1013,88 @@ textarea {
   color: var(--header-color);
   font-family: monospace; /* Or your preferred font */
   animation: pulse 1.5s infinite alternate;
+  -webkit-animation: pulse 1.5s infinite alternate; /* Safari prefix */
 }
 
 @keyframes pulse {
   0% {
     transform: scale(1);
+    -webkit-transform: scale(1); /* Safari prefix */
     opacity: 1;
   }
   100% {
     transform: scale(1.1);
+    -webkit-transform: scale(1.1); /* Safari prefix */
     opacity: 0.7;
   }
+}
+
+/* Fallback for -webkit-keyframes if needed, though @keyframes is standard */
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+/* Calculator Widget Specific Styles */
+.calculator-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.calculator-display {
+  grid-column: span 4;
+  background-color: var(--input-bg, #eee);
+  color: var(--text-color, #000);
+  padding: 15px;
+  font-size: 1.8em;
+  text-align: right;
+  border-radius: 6px;
+  border: 1px solid var(--input-border, #ccc);
+  min-height: 50px;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
+.calc-btn {
+  padding: 15px;
+  font-size: 1.2em;
+  border-radius: 6px;
+  border: 1px solid var(--button-border, #ccc);
+  background-color: var(--button-bg, #f0f0f0);
+  color: var(--button-text, #000);
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-sizing: border-box; /* Prevents layout shift on active/hover */
+}
+
+.calc-btn.span-two {
+  grid-column: span 2;
+}
+
+.calc-btn.op-btn {
+  background-color: var(--topnav-link-hover-bg, #ddd);
+  color: var(--topnav-link-hover, #000);
+}
+
+.calc-btn.op-btn:hover {
+  background-color: var(--topnav-link-active-bg, #ccc);
+}
+
+.calc-btn:active {
+  background-color: var(--button-active-bg, #eee);
+  border: 1px solid var(--button-border, #ccc);
+  /* No transform, no scaling */
+}
+
+.calc-btn:hover {
+  background-color: var(--button-hover-bg, #ddd);
+  /* No transform, no scaling */
 }

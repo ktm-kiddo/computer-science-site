@@ -1,51 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>mateo.lol</title>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>mateo.lol</title>
-  <link rel="stylesheet" href="style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
-  <div id="loading-animation">
-    <div class="loading-text">mateo.lol</div>
-  </div>
-  <div id="app">
-    <div class="topnav">
-      <router-link to="/" class="nav-link" exact>Home</router-link>
-      <router-link to="/about" class="nav-link">About</router-link>
-      <router-link to="/contact" class="nav-link">Contact</router-link>
-      <!-- Add Edit button -->
-      <button @click="toggleEditMode" class="nav-link" :class="{ 'active': editMode }">
-        {{ editMode ? 'Done' : 'Edit' }}
-      </button>
-      <select id="themeSwitcher" class="theme-switcher">
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="solarized">Solarized</option>
-        <option value="matrix">Matrix</option>
-        <option value="ocean">Ocean</option>
-        <option value="retro">Retro</option>
-        <option value="cottoncandy">Cotton Candy</option>
-        <option value="midnight">Midnight</option>
-        <option value="forest">Forest</option>
-        <option value="pastel">Pastel</option>
-        <option value="bubblegum">Bubblegum</option>
-        <option value="citrus">Citrus</option>
-        <option value="grape">Grape</option>
-        <option value="fire">Fire</option>
-      </select>
+  <body>
+    <div id="loading-animation">
+      <div class="loading-text">mateo.lol</div>
     </div>
-    <!-- Pass editMode prop to the component rendered by router-view -->
-    <router-view :edit-mode="editMode"></router-view>
-
-  </div>
-  <!-- Vue and Router via CDN -->
-  <script src="https://unpkg.com/vue@3"></script>
-  <script src="https://unpkg.com/vue-router@4"></script>
-  <script src="script.js" defer></script>
-</body>
-
+    <div id="app">
+      <div class="topnav">
+        <router-link to="/" class="nav-link" exact>Home</router-link>
+        <router-link to="/about" class="nav-link">About</router-link>
+        <router-link to="/contact" class="nav-link">Contact</router-link>
+        <!-- Add Edit button -->
+        <button
+          @click="toggleEditMode"
+          class="nav-link"
+          :class="{ 'active': editMode }"
+        >
+          {{ editMode ? 'Done' : 'Edit' }}
+        </button>
+        <select id="themeSwitcher" class="theme-switcher">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="solarized">Solarized</option>
+          <option value="matrix">Matrix</option>
+          <option value="ocean">Ocean</option>
+          <option value="retro">Retro</option>
+          <option value="cottoncandy">Cotton Candy</option>
+          <option value="midnight">Midnight</option>
+          <option value="forest">Forest</option>
+          <option value="pastel">Pastel</option>
+          <option value="bubblegum">Bubblegum</option>
+          <option value="citrus">Citrus</option>
+          <option value="grape">Grape</option>
+          <option value="fire">Fire</option>
+        </select>
+      </div>
+      <!-- Pass editMode prop to the component rendered by router-view -->
+      <router-view :edit-mode="editMode"></router-view>
+    </div>
+    <!-- Vue and Router via CDN -->
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
+    <script src="script.js" defer></script>
+  </body>
 </html>

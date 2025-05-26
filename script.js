@@ -142,6 +142,47 @@ const Home = {
             <p v-if="todos.length === 0" class="todo-empty-message">No tasks yet!</p>
           </div>
 
+          <!-- This Day in History Widget -->
+          <div v-if="widget.id === 'history'">
+            <h3>On This Day...</h3>
+            <div v-if="historyLoading" class="loading-indicator-wrapper">
+              <div class="spinner"></div>
+              <span class="placeholder-text">Loading history...</span>
+            </div>
+            <div v-else-if="historyFact">
+              <p><strong>{{ historyDate }}</strong></p>
+              <p>{{ historyFact }}</p>
+            </div>
+            <p v-else>Could not load historical fact.</p>
+            <button @click="getHistoryFact" :disabled="historyLoading">Refresh History</button>
+          </div>
+
+          <!-- Calculator Widget -->
+          <div v-if="widget.id === 'calculator'">
+            <h3>Calculator</h3>
+            <div class="calculator-grid">
+              <div class="calculator-display">{{ calculatorDisplay || '0' }}</div>
+              <button @click="clearCalculator" class="calc-btn span-two">C</button>
+              <button @click="deleteCalculator" class="calc-btn">DEL</button>
+              <button @click="chooseOperation('/')" class="calc-btn op-btn">/</button>
+              <button @click="appendNumber('7')" class="calc-btn">7</button>
+              <button @click="appendNumber('8')" class="calc-btn">8</button>
+              <button @click="appendNumber('9')" class="calc-btn">9</button>
+              <button @click="chooseOperation('*')" class="calc-btn op-btn">*</button>
+              <button @click="appendNumber('4')" class="calc-btn">4</button>
+              <button @click="appendNumber('5')" class="calc-btn">5</button>
+              <button @click="appendNumber('6')" class="calc-btn">6</button>
+              <button @click="chooseOperation('-')" class="calc-btn op-btn">-</button>
+              <button @click="appendNumber('1')" class="calc-btn">1</button>
+              <button @click="appendNumber('2')" class="calc-btn">2</button>
+              <button @click="appendNumber('3')" class="calc-btn">3</button>
+              <button @click="chooseOperation('+')" class="calc-btn op-btn">+</button>
+              <button @click="appendNumber('0')" class="calc-btn span-two">0</button>
+              <button @click="appendNumber('.')" class="calc-btn">.</button>
+              <button @click="calculateResult" class="calc-btn op-btn">=</button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -157,7 +198,9 @@ const Home = {
         { id: 'trivia', name: 'Trivia', class: 'trivia-box' },
         { id: 'weather', name: 'Weather', class: 'weather-box' },
         { id: 'quote', name: 'Quote of the Day', class: 'quote-box' },
-        { id: 'todoList', name: 'To-Do List', class: 'todo-box' }
+        { id: 'todoList', name: 'To-Do List', class: 'todo-box' },
+        { id: 'history', name: 'On This Day', class: 'history-box' },
+        { id: 'calculator', name: 'Calculator', class: 'calculator-box' }
       ],
       activeWidgets: [],
       catFact: '',
@@ -184,6 +227,15 @@ const Home = {
       // To-Do List
       todos: [],
       newTodoText: '',
+      // History Widget
+      historyFact: '',
+      historyDate: '',
+      historyLoading: false,
+      // Calculator Widget
+      calculatorDisplay: '',
+      currentOperand: '',
+      previousOperand: '',
+      selectedOperation: null,
     }
   },
   watch: {
@@ -242,7 +294,7 @@ const Home = {
         ).filter(Boolean); // Filter out nulls if a widget ID was saved but no longer exists
       } else {
         // Default layout - include new widgets if desired, or keep it minimal
-        this.activeWidgets = this.availableWidgets.filter(w => ['catFact', 'catPhoto', 'clock', 'quote', 'todoList'].includes(w.id));
+        this.activeWidgets = this.availableWidgets.filter(w => ['catFact', 'catPhoto', 'clock', 'quote', 'todoList', 'history'].includes(w.id));
       }
     },
     getCatFact() {
@@ -254,8 +306,8 @@ const Home = {
           this.catFactLoading = false;
         })
         .catch(() => { // Handle fetch errors for cat fact
-            this.catFact = "Could not fetch cat fact.";
-            this.catFactLoading = false;
+          this.catFact = "Could not fetch cat fact.";
+          this.catFactLoading = false;
         });
     },
     getCatPhoto() {
@@ -474,6 +526,111 @@ const Home = {
       this.getQuote();
     },
 
+    // This Day in History Widget Methods
+    getHistoryFact() {
+      this.historyLoading = true;
+      const today = new Date();
+      const month = today.getMonth() + 1;
+      const day = today.getDate();
+      // Format date for display
+      this.historyDate = today.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+
+      fetch(`https://byabbe.se/on-this-day/${month}/${day}/events.json`)
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.events && data.events.length > 0) {
+            // Pick a random event from the list
+            const randomIndex = Math.floor(Math.random() * data.events.length);
+            this.historyFact = `${data.events[randomIndex].year}: ${data.events[randomIndex].description}`;
+          } else {
+            this.historyFact = "No historical fact found for today.";
+          }
+          this.historyLoading = false;
+        })
+        .catch(error => {
+          console.error("Error fetching history fact:", error);
+          this.historyFact = "Could not fetch historical fact.";
+          this.historyLoading = false;
+        });
+    },
+
+    // Calculator Widget Methods
+    clearCalculator() {
+      this.calculatorDisplay = '';
+      this.currentOperand = '';
+      this.previousOperand = '';
+      this.selectedOperation = null;
+    },
+    deleteCalculator() {
+      this.calculatorDisplay = this.calculatorDisplay.slice(0, -1);
+      if (this.currentOperand === this.calculatorDisplay) { // If we were deleting from currentOperand
+          this.currentOperand = this.calculatorDisplay;
+      }
+    },
+    appendNumber(number) {
+      // If an operator was just pressed and display is empty, start new number
+      if (this.selectedOperation && this.calculatorDisplay === '' && this.previousOperand !== '') {
+        this.calculatorDisplay = number;
+        this.currentOperand = this.calculatorDisplay;
+        return;
+      }
+      if (number === '.' && this.calculatorDisplay.includes('.')) return;
+      this.calculatorDisplay += number;
+      this.currentOperand = this.calculatorDisplay; // Keep currentOperand in sync
+    },
+    chooseOperation(operation) {
+      // If nothing entered, but display is not empty, allow chaining
+      if (this.calculatorDisplay === '' && this.previousOperand === '') return; // Nothing to operate on
+      if (this.calculatorDisplay !== '' && this.previousOperand !== '') {
+        this.calculateResult();
+      }
+      // If display is not empty, set up for next operand (do not append operator to display)
+      if (this.calculatorDisplay !== '') {
+        this.selectedOperation = operation;
+        this.previousOperand = this.calculatorDisplay;
+        this.calculatorDisplay = '';
+        this.currentOperand = '';
+        return;
+      }
+      this.selectedOperation = operation;
+      this.previousOperand = this.calculatorDisplay;
+      this.calculatorDisplay = '';
+      this.currentOperand = '';
+    },
+    calculateResult() {
+      let result;
+      const prev = parseFloat(this.previousOperand);
+      const current = parseFloat(this.calculatorDisplay); // Use calculatorDisplay as current operand for calculation
+      if (isNaN(prev) || isNaN(current)) return;
+      switch (this.selectedOperation) {
+        case '+':
+          result = prev + current;
+          break;
+        case '-':
+          result = prev - current;
+          break;
+        case '*':
+          result = prev * current;
+          break;
+        case '/':
+          if (current === 0) {
+            this.calculatorDisplay = "Error";
+            this.previousOperand = '';
+            this.currentOperand = '';
+            this.selectedOperation = null;
+            return;
+          }
+          result = prev / current;
+          break;
+        default:
+          return;
+      }
+      this.calculatorDisplay = result.toString();
+      this.selectedOperation = null;
+      this.previousOperand = ''; // Reset previousOperand
+      this.currentOperand = result.toString(); // Store result as currentOperand
+    },
+
     // To-Do List Methods
     loadTodos() {
       const savedTodos = localStorage.getItem('todos');
@@ -514,6 +671,7 @@ const Home = {
     this.getTriviaQuestion();
     this.loadQuote(); // Load quote
     this.loadTodos(); // Load todos
+    this.getHistoryFact(); // Load initial history fact
     setInterval(this.showTime, 1000);
 
     // Inject CSS to fix to-do button hover issue
