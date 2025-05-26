@@ -652,7 +652,7 @@ h1 {
 .weathertemp1 {
   font-size: 1.4em;
   font-weight: bold;
-  margin: 10px 0 0 0;
+  margin: 10px 0 15px 0; /* Added 15px bottom margin */
 }
 
 /* ===== Buttons, forms, etc ===== */
@@ -844,53 +844,129 @@ textarea {
   cursor: pointer;
 }
 
-/* Style for the edit button in the topnav if not already themed */
-.topnav .edit-btn {
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: 1px solid var(--button-border);
-  padding: 8px 12px;
-  border-radius: 6px;
+/* --- Quote Widget Styles --- */
+
+/* --- To-Do List Widget Styles --- */
+.todo-box {
+  /* Inherits general .box styling */
+}
+
+.todo-form {
+  display: flex; 
+  margin-bottom: 15px; 
+}
+
+.todo-input {
+  flex-grow: 1; 
+  padding: 10px 12px; /* Adjusted padding for a more standard input field height */
+  border: 1px solid var(--input-border-color);
+  border-radius: 4px 0 0 4px; 
+  background-color: var(--input-bg-color);
+  color: var(--input-text-color);
+  font-size: 1em; /* Ensure font size is consistent */
+  line-height: 1.5; /* Improve text alignment within the input */
+}
+.todo-input::placeholder {
+  color: var(--input-placeholder-color);
+}
+.todo-input:focus {
+  outline: none;
+  border-color: var(--button-bg-color); 
+  box-shadow: 0 0 0 0.2rem var(--button-bg-color-transparent); /* Bootstrap-like focus glow */
+}
+
+
+.todo-add-btn {
+  padding: 10px 15px; 
+  border: 1px solid var(--button-bg-color);
+  border-left: none; 
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
   cursor: pointer;
-  font-family: monospace;
-  transition: background-color 0.2s, border-color 0.2s;
+  border-radius: 0 4px 4px 0; 
+  font-size: 1.2em; /* Make the "+" slightly larger */
+  line-height: 1.5; /* Align with input field text */
+  margin-top: 0; 
+  transition: background-color 0.2s ease-in-out;
+}
+.todo-add-btn:hover {
+  background-color: var(--button-hover-bg-color);
 }
 
-.topnav .edit-btn:hover {
-  background-color: var(--button-hover-bg);
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1; 
+  overflow-y: auto; 
+  max-height: 180px; /* Or adjust based on desired box height */
 }
 
-/* Widget controls in edit mode */
-.widget-controls {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+.todo-item {
   display: flex;
-  gap: 5px;
-  z-index: 10; /* Ensure controls are above widget content */
+  align-items: center;
+  padding: 10px 8px; /* Consistent padding */
+  border-bottom: 1px solid var(--box-border-color);
+  transition: background-color 0.15s ease-in-out; 
+}
+.todo-item:last-child {
+  border-bottom: none; 
+}
+.todo-item:hover {
+  background-color: var(--box-hover-bg-color); 
 }
 
-.widget-controls .move-btn,
-.widget-controls .remove-btn {
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: 1px solid var(--button-border);
-  border-radius: 4px;
-  width: 28px;
-  height: 28px;
-  font-size: 16px;
-  line-height: 26px; /* Center icon vertically */
-  text-align: center;
+
+.todo-checkbox {
+  margin-right: 12px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  /* Using default appearance for simplicity, but custom checkboxes can offer better styling */
+  width: 18px; /* Slightly larger checkbox */
+  height: 18px; /* Slightly larger checkbox */
+  flex-shrink: 0; /* Prevent checkbox from shrinking */
 }
 
-.widget-controls .move-btn:hover,
-.widget-controls .remove-btn:hover {
-  background-color: var(--button-hover-bg);
+.todo-text {
+  flex-grow: 1;
+  cursor: pointer; 
+  color: var(--text-color);
+  word-break: break-word; /* Handles long text without breaking layout */
+  line-height: 1.4; /* Improved readability */
+  padding: 2px 0; /* Small vertical padding for better click area feel */
 }
 
-.widget-controls .move-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: var(--text-color-disabled);
+  font-style: italic; /* Optional: further distinguish completed items */
 }
+
+.todo-remove-btn {
+  background: none;
+  border: none;
+  color: var(--danger-color);
+  font-size: 1.4em; /* Slightly larger for easier interaction */
+  line-height: 1; 
+  cursor: pointer;
+  padding: 0 5px; 
+  margin-left: 8px; /* Space between text and remove button */
+  margin-top: 0; 
+  transition: color 0.15s ease-in-out;
+  flex-shrink: 0; /* Prevent button from shrinking */
+}
+.todo-remove-btn:hover {
+  color: var(--danger-hover-color);
+}
+
+.todo-empty-message {
+  text-align: center;
+  color: var(--text-color-secondary);
+  padding: 20px 0; 
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+}
+
+/* ...existing code for other styles like .edit-panel, .widget-controls etc. */

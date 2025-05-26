@@ -107,6 +107,41 @@ const Home = {
             </div>
             <button @click="getWeatherData" :disabled="weatherDataLoading">Refresh</button>
           </div>
+
+          <!-- Quote of the Day Widget -->
+          <div v-if="widget.id === 'quote'">
+            <h3>Quote of the Day</h3>
+            <div v-if="quoteLoading" class="loading-indicator-wrapper">
+              <div class="spinner"></div>
+              <span class="placeholder-text">Loading quote...</span>
+            </div>
+            <div v-else-if="quoteText">
+              <p><em>"{{ quoteText }}"</em></p>
+              <p>- {{ quoteAuthor || 'Unknown' }}</p>
+            </div>
+            <div v-else>
+              <p>Could not load today's quote.</p>
+            </div>
+            <!-- "New Quote" button removed -->
+          </div>
+
+          <!-- To-Do List Widget -->
+          <div v-if="widget.id === 'todoList'">
+            <h3>To-Do List</h3>
+            <form @submit.prevent="addTodo" class="todo-form">
+              <input type="text" v-model="newTodoText" placeholder="Add a new task" class="todo-input">
+              <button type="submit" class="todo-add-btn">+</button>
+            </form>
+            <ul class="todo-list">
+              <li v-for="todo in todos" :key="todo.id" :class="{ completed: todo.completed }" class="todo-item">
+                <input type="checkbox" :checked="todo.completed" @change="toggleTodoCompletion(todo.id)" class="todo-checkbox">
+                <span @click="toggleTodoCompletion(todo.id)" class="todo-text">{{ todo.text }}</span>
+                <button @click="removeTodo(todo.id)" class="todo-remove-btn">×</button>
+              </li>
+            </ul>
+            <p v-if="todos.length === 0" class="todo-empty-message">No tasks yet!</p>
+          </div>
+
         </div>
       </div>
     </div>
@@ -120,7 +155,9 @@ const Home = {
         { id: 'aqi', name: 'Air Quality', class: 'aqi-box' },
         { id: 'clock', name: 'Clock', class: 'clock-box' },
         { id: 'trivia', name: 'Trivia', class: 'trivia-box' },
-        { id: 'weather', name: 'Weather', class: 'weather-box' }
+        { id: 'weather', name: 'Weather', class: 'weather-box' },
+        { id: 'quote', name: 'Quote of the Day', class: 'quote-box' },
+        { id: 'todoList', name: 'To-Do List', class: 'todo-box' }
       ],
       activeWidgets: [],
       catFact: '',
@@ -139,6 +176,14 @@ const Home = {
       triviaButtonDisabled: true,
       newQuestionLoading: true,
       weatherData: null,
+      // Quote of the Day
+      quoteText: '',
+      quoteAuthor: '',
+      quoteLoading: false,
+      quoteDate: '', // To store the date of the fetched quote
+      // To-Do List
+      todos: [],
+      newTodoText: '',
     }
   },
   watch: {
@@ -155,14 +200,13 @@ const Home = {
       if (this.catPicOriginalWidth && this.catPicOriginalHeight) {
         return {
           aspectRatio: `${this.catPicOriginalWidth} / ${this.catPicOriginalHeight}`,
-          // width: '100%', // This is already handled by CSS class
-          // height will be determined by width and aspect-ratio
+          minHeight: '0' // Override CSS min-height to let aspect ratio dictate size
         };
       }
       // Fallback style if dimensions are not yet known
+      // The CSS min-height: 150px will apply here if 220px is larger, which it is.
       return {
         height: '220px', // Default height
-        // width: '100%', // This is already handled by CSS class
       };
     }
   },
@@ -195,10 +239,10 @@ const Home = {
         const savedIds = JSON.parse(saved);
         this.activeWidgets = savedIds.map(id => 
           this.availableWidgets.find(w => w.id === id)
-        ).filter(Boolean);
+        ).filter(Boolean); // Filter out nulls if a widget ID was saved but no longer exists
       } else {
-        // Default layout
-        this.activeWidgets = [...this.availableWidgets];
+        // Default layout - include new widgets if desired, or keep it minimal
+        this.activeWidgets = this.availableWidgets.filter(w => ['catFact', 'catPhoto', 'clock', 'quote', 'todoList'].includes(w.id));
       }
     },
     getCatFact() {
@@ -381,14 +425,95 @@ const Home = {
         this.falseButton = "";
         this.triviaButtonDisabled = true;
       }
+    },
+    // Quote of the Day Methods
+    getQuote() {
+      this.quoteLoading = true;
+      // Using ZenQuotes API for today's quote
+      fetch("https://zenquotes.io/api/today", { mode: 'cors' }) 
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data && data[0] && data[0].q && data[0].a) {
+            this.quoteText = data[0].q;
+            this.quoteAuthor = data[0].a;
+            const today = new Date().toDateString();
+            this.quoteDate = today;
+            localStorage.setItem('dailyQuote', JSON.stringify({ text: this.quoteText, author: this.quoteAuthor, date: today }));
+          } else {
+            this.quoteText = "Could not parse quote data.";
+            this.quoteAuthor = "Unknown";
+          }
+          this.quoteLoading = false;
+        })
+        .catch(error => {
+          console.error("Error fetching quote:", error);
+          this.quoteText = "Could not fetch today's quote. Check console for errors.";
+          this.quoteAuthor = "Error";
+          this.quoteLoading = false;
+        });
+    },
+    loadQuote() {
+      const savedQuoteData = localStorage.getItem('dailyQuote');
+      const today = new Date().toDateString();
+
+      if (savedQuoteData) {
+        const { text, author, date } = JSON.parse(savedQuoteData);
+        if (date === today) {
+          this.quoteText = text;
+          this.quoteAuthor = author;
+          this.quoteDate = date;
+          return; // Quote is current, no need to fetch
+        }
+      }
+      // If no saved quote, or saved quote is not from today, fetch a new one.
+      this.getQuote();
+    },
+
+    // To-Do List Methods
+    loadTodos() {
+      const savedTodos = localStorage.getItem('todos');
+      if (savedTodos) {
+        this.todos = JSON.parse(savedTodos);
+      }
+    },
+    saveTodos() {
+      localStorage.setItem('todos', JSON.stringify(this.todos));
+    },
+    addTodo() {
+      if (this.newTodoText.trim() === '') return;
+      this.todos.push({
+        id: Date.now(),
+        text: this.newTodoText.trim(),
+        completed: false
+      });
+      this.newTodoText = '';
+      this.saveTodos();
+    },
+    toggleTodoCompletion(todoId) {
+      const todo = this.todos.find(t => t.id === todoId);
+      if (todo) {
+        todo.completed = !todo.completed;
+        this.saveTodos();
+      }
+    },
+    removeTodo(todoId) {
+      this.todos = this.todos.filter(t => t.id !== todoId);
+      this.saveTodos();
     }
   },
   mounted() {
     this.loadLayout();
     this.getCatFact();
     this.getCatPhoto();
-    this.getWeatherData(); // This will now handle its loading and error states more gracefully
+    this.getWeatherData(); 
     this.getTriviaQuestion();
+    this.loadQuote(); // Load quote
+    this.loadTodos(); // Load todos
     setInterval(this.showTime, 1000);
   }
 };
