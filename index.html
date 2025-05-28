@@ -43,6 +43,7 @@
         <router-link to="/contact" class="nav-link">Contact</router-link>
         <!-- Add Edit button -->
         <button
+          v-show="$route.path === '/'"
           @click="toggleEditMode"
           class="nav-link"
           :class="{ 'active': editMode }"
