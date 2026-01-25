@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>iGCSE Solubility Flashcards</title>
+    <style>
+      :root {
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Arial,
+          sans-serif;
+        color-scheme: light;
+      }
+      body {
+        margin: 0;
+        background: #f3f5f9;
+        color: #0f172a;
+      }
+      .wrap {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .card {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        border: 1px solid #e6eaf0;
+        position: relative;
+        overflow: hidden;
+      }
+      h1 {
+        font-size: 18px;
+        margin: 0 0 12px;
+        letter-spacing: 0.2px;
+      }
+      .salt {
+        font-size: 42px;
+        font-weight: 700;
+        margin: 8px 0 12px;
+      }
+      .chem {
+        font-family:
+          "Noto Sans", "Noto Sans Symbols 2", "STIX Two Math",
+          "Times New Roman", serif;
+        letter-spacing: 0.2px;
+      }
+      .sub {
+        color: #475569;
+        margin: 0 0 14px;
+        line-height: 1.4;
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .answer-row {
+        gap: 12px;
+      }
+      .answer-row button {
+        font-size: 18px;
+        padding: 16px 18px;
+        flex: 1 1 240px;
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+      }
+      button {
+        border: 0;
+        border-radius: 12px;
+        padding: 12px 14px;
+        font-weight: 700;
+        cursor: pointer;
+        flex: 1 1 140px;
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08);
+      }
+      .yes {
+        background: #2563eb;
+        color: #fff;
+      }
+      .no {
+        background: #ef4444;
+        color: #fff;
+      }
+      .next {
+        background: #1f2937;
+        color: #fff;
+      }
+      .ghost {
+        background: #eef2f7;
+        color: #0f172a;
+      }
+      .danger {
+        background: #dc2626;
+        color: #fff;
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+      .feedback {
+        margin-top: 14px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: #f8fafc;
+        border: 1px solid #e6eaf0;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .feedback .chem {
+        vertical-align: baseline;
+        position: relative;
+        top: 1px;
+      }
+      .chem sub {
+        vertical-align: baseline;
+        position: relative;
+        top: 0.2em;
+        font-size: 0.7em;
+      }
+      .ok {
+        color: #166534;
+      }
+      .bad {
+        color: #991b1b;
+      }
+      .meta {
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .stat {
+        background: #fff;
+        border-radius: 14px;
+        padding: 12px;
+        border: 1px solid #e6eaf0;
+      }
+      .stat b {
+        font-size: 18px;
+      }
+      .small {
+        color: #64748b;
+        font-size: 12px;
+      }
+      .controls {
+        margin-top: 10px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+      }
+      .controls .small {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      select {
+        padding: 8px 10px;
+      }
+      select#mode {
+        appearance: none;
+        padding: 6px 26px 6px 10px;
+        border-radius: 999px;
+        border: 1px solid #d7dce4;
+        background: #fff
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2364758b' d='M1 1l5 5 5-5'/%3E%3C/svg%3E")
+          no-repeat right 10px center;
+        background-size: 12px 8px;
+        line-height: 1;
+      }
+      body[data-theme="dark"] select#mode {
+        background: #0b1220
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23e5e7eb' d='M1 1l5 5 5-5'/%3E%3C/svg%3E")
+          no-repeat right 10px center;
+        border-color: #1f2937;
+        color: #e5e7eb;
+      }
+
+      .toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .toggle input {
+        display: none;
+      }
+      .switch {
+        width: 38px;
+        height: 22px;
+        border-radius: 999px;
+        background: #cbd5e1;
+        position: relative;
+        transition: background 0.2s ease;
+      }
+      .switch::after {
+        content: "";
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        background: #fff;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        transition: transform 0.2s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+      .toggle input:checked + .switch {
+        background: #22c55e;
+      }
+      .toggle input:checked + .switch::after {
+        transform: translateX(16px);
+      }
+      body[data-theme="dark"] .switch {
+        background: #334155;
+      }
+
+      @keyframes confetti-fall {
+        0% {
+          transform: translateY(-10px) rotate(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(120px) rotate(180deg);
+          opacity: 0;
+        }
+      }
+
+      .tabs {
+        display: flex;
+        gap: 8px;
+        margin: 0 0 14px;
+      }
+      .tab-btn {
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-weight: 700;
+        background: #eef2f7;
+        color: #0f172a;
+      }
+      .tab-btn.active {
+        background: #0f172a;
+        color: #fff;
+      }
+      .tab-panel {
+        display: none;
+      }
+      .tab-panel.active {
+        display: block;
+      }
+
+      .allcards {
+        margin-top: 8px;
+        border-radius: 14px;
+        border: 1px solid #e6eaf0;
+        overflow: hidden;
+      }
+      .allcards table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      .allcards th,
+      .allcards td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #eef2f7;
+        text-align: left;
+      }
+      .status-ok {
+        color: #166534;
+        font-weight: 700;
+      }
+      .status-bad {
+        color: #991b1b;
+        font-weight: 700;
+      }
+      .status-new {
+        color: #64748b;
+        font-weight: 700;
+      }
+
+      details.settings {
+        margin-top: 12px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid #e6eaf0;
+        background: #f8fafc;
+      }
+      details.settings > summary {
+        cursor: pointer;
+        font-weight: 700;
+        color: #0f172a;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      details.settings > summary .caret {
+        margin-left: auto;
+        font-size: 14px;
+        color: #94a3b8;
+        transition: transform 0.2s ease;
+      }
+      details.settings > summary[open] .caret {
+        transform: rotate(90deg);
+      }
+      body[data-theme="dark"] details.settings > summary {
+        color: #e5e7eb;
+      }
+
+      .danger-note {
+        margin-top: 8px;
+        color: #991b1b;
+        font-size: 12px;
+      }
+
+      #confetti {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .confetti-piece {
+        position: absolute;
+        width: 6px;
+        height: 10px;
+        border-radius: 2px;
+        animation: confetti-fall 0.8s ease-out forwards;
+        opacity: 0.9;
+      }
+
+      body[data-theme="dark"] {
+        background: #0b1220;
+        color: #e5e7eb;
+      }
+      body[data-theme="dark"] .card {
+        background: #0f172a;
+        border-color: #1f2937;
+      }
+      body[data-theme="dark"] .sub,
+      body[data-theme="dark"] .small {
+        color: #94a3b8;
+      }
+      body[data-theme="dark"] .feedback {
+        background: #0b1220;
+        border-color: #1f2937;
+      }
+      body[data-theme="dark"] .stat,
+      body[data-theme="dark"] .allcards {
+        background: #0f172a;
+        border-color: #1f2937;
+      }
+      body[data-theme="dark"] .allcards th,
+      body[data-theme="dark"] .allcards td {
+        border-bottom-color: #1f2937;
+      }
+      body[data-theme="dark"] .ghost {
+        background: #1f2937;
+        color: #e5e7eb;
+      }
+      body[data-theme="dark"] .tab-btn {
+        background: #1f2937;
+        color: #e5e7eb;
+      }
+      body[data-theme="dark"] .tab-btn.active {
+        background: #e5e7eb;
+        color: #0f172a;
+      }
+      body[data-theme="dark"] details.settings {
+        background: #0b1220;
+        border-color: #1f2937;
+      }
+      body[data-theme="dark"] .next {
+        background: #e5e7eb;
+        color: #0f172a;
+      }
+      /* ...existing code... */
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <h1>iGCSE Edexcel Solubility Flashcards</h1>
+
+        <div class="tabs" role="tablist">
+          <button
+            class="tab-btn active"
+            id="tabBtnPractice"
+            role="tab"
+            aria-controls="tabPractice"
+            aria-selected="true"
+          >
+            Practice
+          </button>
+          <button
+            class="tab-btn"
+            id="tabBtnAll"
+            role="tab"
+            aria-controls="tabAll"
+            aria-selected="false"
+          >
+            All Cards
+          </button>
+        </div>
+
+        <section id="tabPractice" class="tab-panel active" role="tabpanel">
+          <div class="salt chem" id="salt">—</div>
+
+          <div class="row answer-row">
+            <button class="yes" id="btnYes">Yes</button>
+            <button class="no" id="btnNo">No</button>
+          </div>
+
+          <div class="feedback" id="feedback">Pick Yes or No.</div>
+
+          <div class="row">
+            <button class="next" id="btnNext" disabled>Next</button>
+            <button class="ghost" id="btnReveal">Reveal rule</button>
+          </div>
+
+          <details class="settings">
+            <summary>
+              Stats &amp; Settings
+              <span class="caret" aria-hidden="true">›</span>
+            </summary>
+            <div class="meta">
+              <div class="stat">
+                <div class="small">Score</div>
+                <div>
+                  <b class="mono" id="score">0</b> /
+                  <span class="mono" id="total">0</span>
+                </div>
+              </div>
+              <div class="stat">
+                <div class="small">Streak</div>
+                <div><b class="mono" id="streak">0</b></div>
+              </div>
+            </div>
+
+            <div class="controls">
+              <label class="small">
+                Mode:
+                <select id="mode">
+                  <option value="auto" selected>Auto</option>
+                  <option value="unseen">Only unseen</option>
+                  <option value="review">Needs review</option>
+                  <option value="random">Random</option>
+                  <option value="all">All cards</option>
+                </select>
+              </label>
+
+              <label class="small toggle">
+                Dark mode
+                <input id="darkMode" type="checkbox" />
+                <span class="switch" aria-hidden="true"></span>
+              </label>
+            </div>
+          </details>
+        </section>
+
+        <section id="tabAll" class="tab-panel" role="tabpanel">
+          <p class="sub">All cards with progress and accuracy.</p>
+          <div class="allcards">
+            <table>
+              <thead>
+                <tr>
+                  <th>Formula</th>
+                  <th>Soluble?</th>
+                  <th>Seen</th>
+                  <th>Correct</th>
+                  <th>Missed</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="allCardsBody"></tbody>
+            </table>
+          </div>
+
+          <div class="row" style="margin-top: 12px">
+            <button class="danger" id="btnReset">Reset stats</button>
+          </div>
+          <div class="danger-note">Warning: this will delete all stats.</div>
+        </section>
+
+        <div id="confetti" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <script>
+      // --- Core solubility rules matching the revision table ---
+      const ALWAYS_SOLUBLE_CATIONS = new Set(["Na", "K", "NH4"]);
+      const ALWAYS_SOLUBLE_ANIONS = new Set(["NO3"]);
+
+      const CHLORIDE_EXCEPTIONS_CATIONS = new Set(["Ag", "Pb"]); // AgCl, PbCl2 insoluble
+      const SULFATE_EXCEPTIONS_CATIONS = new Set(["Ba", "Ca", "Pb"]); // BaSO4, CaSO4, PbSO4 insoluble
+
+      // For this app, "sparingly soluble" is treated as NOT soluble (answer "No")
+      // per common exam treatment.
+      const SPARING_SPECIALS = new Set(["Ca(OH)2"]);
+
+      // --- Large card bank (mix of common + exam-style) ---
+      // Each card has formula + (true=soluble, false=insoluble) + a short rule hint.
+      const CARDS = [
+        // Nitrates (always soluble)
+        { f: "NaNO3", s: true, h: "Nitrate: always soluble" },
+        { f: "KNO3", s: true, h: "Nitrate: always soluble" },
+        { f: "NH4NO3", s: true, h: "Nitrate: always soluble" },
+        { f: "AgNO3", s: true, h: "Nitrate: always soluble" },
+        { f: "Ca(NO3)2", s: true, h: "Nitrate: always soluble" },
+        { f: "Pb(NO3)2", s: true, h: "Nitrate: always soluble" },
+        { f: "Al(NO3)3", s: true, h: "Nitrate: always soluble" },
+        { f: "Mg(NO3)2", s: true, h: "Nitrate: always soluble" },
+
+        // Group 1 / ammonium (always soluble)
+        { f: "NaCl", s: true, h: "Na⁺ salt: always soluble" },
+        { f: "KCl", s: true, h: "K⁺ salt: always soluble" },
+        { f: "NH4Cl", s: true, h: "NH4⁺ salt: always soluble" },
+        { f: "Na2SO4", s: true, h: "Na⁺ salt: always soluble" },
+        { f: "K2SO4", s: true, h: "K⁺ salt: always soluble" },
+        { f: "(NH4)2SO4", s: true, h: "NH4⁺ salt: always soluble" },
+        { f: "Na2CO3", s: true, h: "Na⁺ salt: always soluble" },
+        { f: "K2CO3", s: true, h: "K⁺ salt: always soluble" },
+        { f: "(NH4)2CO3", s: true, h: "NH4⁺ salt: always soluble" },
+        { f: "NaOH", s: true, h: "Na⁺ salt: always soluble" },
+        { f: "KOH", s: true, h: "K⁺ salt: always soluble" },
+        { f: "NH4OH", s: true, h: "NH4⁺ salt: always soluble" },
+
+        // Chlorides (soluble except Ag+, Pb2+)
+        { f: "MgCl2", s: true, h: "Chloride: soluble (not Ag/Pb)" },
+        { f: "CaCl2", s: true, h: "Chloride: soluble (not Ag/Pb)" },
+        { f: "AlCl3", s: true, h: "Chloride: soluble (not Ag/Pb)" },
+        { f: "CuCl2", s: true, h: "Chloride: soluble (not Ag/Pb)" },
+        { f: "FeCl2", s: true, h: "Chloride: soluble (not Ag/Pb)" },
+        { f: "FeCl3", s: true, h: "Chloride: soluble (not Ag/Pb)" },
+        { f: "AgCl", s: false, h: "Chloride exception: AgCl insoluble" },
+        { f: "PbCl2", s: false, h: "Chloride exception: PbCl2 insoluble" },
+
+        // Sulfates (soluble except Ba, Ca, Pb)
+        { f: "Na2SO4", s: true, h: "Sulfate: soluble (and Na⁺ anyway)" },
+        { f: "MgSO4", s: true, h: "Sulfate: soluble (not Ba/Ca/Pb)" },
+        { f: "CuSO4", s: true, h: "Sulfate: soluble (not Ba/Ca/Pb)" },
+        { f: "ZnSO4", s: true, h: "Sulfate: soluble (not Ba/Ca/Pb)" },
+        { f: "Al2(SO4)3", s: true, h: "Sulfate: soluble (not Ba/Ca/Pb)" },
+        { f: "(NH4)2SO4", s: true, h: "Sulfate: soluble (and NH4⁺ anyway)" },
+        {
+          f: "Ag2SO4",
+          s: true,
+          h: "Sulfate: soluble (exceptions are Ba/Ca/Pb)",
+        },
+        { f: "BaSO4", s: false, h: "Sulfate exception: BaSO4 insoluble" },
+        { f: "CaSO4", s: false, h: "Sulfate exception: CaSO4 insoluble" },
+        { f: "PbSO4", s: false, h: "Sulfate exception: PbSO4 insoluble" },
+
+        // Carbonates (insoluble except Na/K/NH4)
+        { f: "CaCO3", s: false, h: "Carbonate: insoluble (not Na/K/NH4)" },
+        { f: "MgCO3", s: false, h: "Carbonate: insoluble (not Na/K/NH4)" },
+        { f: "ZnCO3", s: false, h: "Carbonate: insoluble (not Na/K/NH4)" },
+        { f: "CuCO3", s: false, h: "Carbonate: insoluble (not Na/K/NH4)" },
+        { f: "FeCO3", s: false, h: "Carbonate: insoluble (not Na/K/NH4)" },
+        { f: "PbCO3", s: false, h: "Carbonate: insoluble (not Na/K/NH4)" },
+        { f: "Na2CO3", s: true, h: "Na⁺ salt: always soluble" },
+        { f: "K2CO3", s: true, h: "K⁺ salt: always soluble" },
+        { f: "(NH4)2CO3", s: true, h: "NH4⁺ salt: always soluble" },
+
+        // Hydroxides (insoluble except Na/K/NH4; Ca(OH)2 sparingly => treated as No)
+        { f: "Mg(OH)2", s: false, h: "Hydroxide: insoluble (not Na/K/NH4)" },
+        { f: "Al(OH)3", s: false, h: "Hydroxide: insoluble (not Na/K/NH4)" },
+        { f: "Fe(OH)2", s: false, h: "Hydroxide: insoluble (not Na/K/NH4)" },
+        { f: "Fe(OH)3", s: false, h: "Hydroxide: insoluble (not Na/K/NH4)" },
+        { f: "Cu(OH)2", s: false, h: "Hydroxide: insoluble (not Na/K/NH4)" },
+        { f: "Zn(OH)2", s: false, h: "Hydroxide: insoluble (not Na/K/NH4)" },
+        {
+          f: "Ca(OH)2",
+          s: false,
+          h: "Ca(OH)2 is sparingly soluble → treat as No",
+        },
+        { f: "NaOH", s: true, h: "Na⁺ salt: always soluble" },
+        { f: "KOH", s: true, h: "K⁺ salt: always soluble" },
+        { f: "NH4OH", s: true, h: "NH4⁺ salt: always soluble" },
+      ];
+
+      // --- Parsing helper (very lightweight) ---
+      // Extract main cation (first token) and main anion (common endings)
+      function extractIons(formula) {
+        // Special-case patterns like Ca(OH)2, Al2(SO4)3 etc.
+        const cationMatch = formula.match(/^([A-Z][a-z]?|NH4)/);
+        const cation = cationMatch ? cationMatch[1] : null;
+
+        let anion = null;
+        if (formula.includes("NO3")) anion = "NO3";
+        else if (formula.includes("SO4")) anion = "SO4";
+        else if (formula.includes("CO3")) anion = "CO3";
+        else if (formula.includes("OH")) anion = "OH";
+        else if (formula.includes("Cl")) anion = "Cl";
+        return { cation, anion };
+      }
+
+      // Compute solubility from rules (for generating extra randoms if desired)
+      function ruleSoluble(formula) {
+        if (SPARING_SPECIALS.has(formula)) return false;
+
+        const { cation, anion } = extractIons(formula);
+
+        if (!cation || !anion) return null;
+
+        if (ALWAYS_SOLUBLE_CATIONS.has(cation)) return true;
+        if (ALWAYS_SOLUBLE_ANIONS.has(anion)) return true;
+
+        if (anion === "Cl") {
+          return !CHLORIDE_EXCEPTIONS_CATIONS.has(cation);
+        }
+        if (anion === "SO4") {
+          return !SULFATE_EXCEPTIONS_CATIONS.has(cation);
+        }
+        if (anion === "CO3" || anion === "OH") {
+          return ALWAYS_SOLUBLE_CATIONS.has(cation); // only Na/K/NH4
+        }
+        return null;
+      }
+
+      // --- App state ---
+      const els = {
+        salt: document.getElementById("salt"),
+        feedback: document.getElementById("feedback"),
+        btnYes: document.getElementById("btnYes"),
+        btnNo: document.getElementById("btnNo"),
+        btnNext: document.getElementById("btnNext"),
+        btnReveal: document.getElementById("btnReveal"),
+        btnReset: document.getElementById("btnReset"),
+        score: document.getElementById("score"),
+        total: document.getElementById("total"),
+        streak: document.getElementById("streak"),
+        mode: document.getElementById("mode"),
+        tabBtnPractice: document.getElementById("tabBtnPractice"),
+        tabBtnAll: document.getElementById("tabBtnAll"),
+        tabPractice: document.getElementById("tabPractice"),
+        tabAll: document.getElementById("tabAll"),
+        allCardsBody: document.getElementById("allCardsBody"),
+        confetti: document.getElementById("confetti"),
+        darkMode: document.getElementById("darkMode"),
+      };
+
+      let deck = [];
+      let current = null;
+      let answered = false;
+
+      // Track performance per formula
+      const perf = new Map(); // f -> {seen, correct, missed}
+      let score = 0,
+        total = 0,
+        streak = 0;
+
+      function shuffle(a) {
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      function needsReview(card) {
+        const p = perf.get(card.f);
+        if (!p || p.seen === 0) return false;
+        const accuracy = p.correct / Math.max(1, p.seen);
+        return p.missed > 0 || (p.seen >= 3 && accuracy < 0.8);
+      }
+
+      function updateModeOptions() {
+        const unseenCount = CARDS.filter(
+          (c) => !(perf.get(c.f)?.seen > 0),
+        ).length;
+        const reviewCount = CARDS.filter((c) => needsReview(c)).length;
+
+        const unseenOpt = els.mode.querySelector('option[value="unseen"]');
+        const reviewOpt = els.mode.querySelector('option[value="review"]');
+
+        unseenOpt.disabled = unseenCount === 0;
+        reviewOpt.disabled = reviewCount === 0;
+
+        if (els.mode.value === "unseen" && unseenOpt.disabled)
+          els.mode.value = "auto";
+        if (els.mode.value === "review" && reviewOpt.disabled)
+          els.mode.value = "auto";
+      }
+
+      function buildDeck() {
+        const mode = els.mode.value;
+
+        if (mode === "unseen") {
+          deck = shuffle(CARDS.filter((c) => !(perf.get(c.f)?.seen > 0)));
+          return;
+        }
+
+        if (mode === "review") {
+          deck = shuffle(CARDS.filter((c) => needsReview(c)));
+          return;
+        }
+
+        if (mode === "random") {
+          deck = shuffle([...CARDS]);
+          return;
+        }
+
+        if (mode === "all") {
+          deck = [...CARDS];
+          return;
+        }
+
+        // auto
+        const unseen = shuffle(CARDS.filter((c) => !(perf.get(c.f)?.seen > 0)));
+        const review = shuffle(CARDS.filter((c) => needsReview(c)));
+        const rest = shuffle(
+          CARDS.filter((c) => perf.get(c.f)?.seen > 0 && !needsReview(c)),
+        );
+        deck = [...unseen, ...review, ...rest];
+      }
+
+      function formatFormula(formula) {
+        return formula.replace(/(\d+)/g, "<sub>$1</sub>");
+      }
+
+      function getNextCard() {
+        if (deck.length === 0) buildDeck();
+        current = deck.pop();
+        answered = false;
+
+        els.salt.innerHTML = formatFormula(current.f);
+        els.feedback.innerHTML = `Is <span class="chem">${formatFormula(current.f)}</span> soluble in water?`;
+        els.feedback.className = "feedback";
+
+        els.btnYes.disabled = false;
+        els.btnNo.disabled = false;
+        els.btnNext.disabled = true;
+      }
+
+      function markSeen(card) {
+        const p = perf.get(card.f) || { seen: 0, correct: 0, missed: 0 };
+        p.seen += 1;
+        perf.set(card.f, p);
+        return p;
+      }
+
+      function answer(userSaysSoluble) {
+        if (!current || answered) return;
+        answered = true;
+
+        const p = markSeen(current);
+        total += 1;
+
+        const correct = userSaysSoluble === current.s;
+
+        if (correct) {
+          score += 1;
+          streak += 1;
+          p.correct += 1;
+          els.feedback.innerHTML = `<span class="ok">Correct.</span>`;
+          fireConfetti();
+        } else {
+          streak = 0;
+          p.missed += 1;
+
+          const truth = current.s ? "Yes (soluble)" : "No (insoluble)";
+          els.feedback.innerHTML = `<span class="bad">Incorrect.</span> Correct answer: <b>${truth}</b>.`;
+        }
+
+        els.score.textContent = String(score);
+        els.total.textContent = String(total);
+        els.streak.textContent = String(streak);
+
+        els.btnYes.disabled = true;
+        els.btnNo.disabled = true;
+        els.btnNext.disabled = false;
+
+        renderAllCards();
+        saveProgress();
+        updateModeOptions();
+      }
+
+      function renderAllCards() {
+        const rows = CARDS.map((c) => {
+          const p = perf.get(c.f) || { seen: 0, correct: 0, missed: 0 };
+          const status =
+            p.seen === 0
+              ? { text: "Unseen", cls: "status-new" }
+              : p.missed === 0
+                ? { text: "Correct", cls: "status-ok" }
+                : { text: "Needs review", cls: "status-bad" };
+
+          return `
+          <tr>
+            <td class="chem">${formatFormula(c.f)}</td>
+            <td>${c.s ? "Yes" : "No"}</td>
+            <td class="mono">${p.seen}</td>
+            <td class="mono">${p.correct}</td>
+            <td class="mono">${p.missed}</td>
+            <td class="${status.cls}">${status.text}</td>
+          </tr>`;
+        }).join("");
+        els.allCardsBody.innerHTML = rows;
+      }
+
+      function setTab(which) {
+        const isPractice = which === "practice";
+        els.tabPractice.classList.toggle("active", isPractice);
+        els.tabAll.classList.toggle("active", !isPractice);
+        els.tabBtnPractice.classList.toggle("active", isPractice);
+        els.tabBtnAll.classList.toggle("active", !isPractice);
+        els.tabBtnPractice.setAttribute("aria-selected", String(isPractice));
+        els.tabBtnAll.setAttribute("aria-selected", String(!isPractice));
+      }
+
+      function ruleSummary(card) {
+        const h = card.h || "";
+        if (h.includes("Nitrate")) return "Nitrates: always soluble.";
+        if (
+          h.includes("Na⁺ salt") ||
+          h.includes("K⁺ salt") ||
+          h.includes("NH4⁺ salt")
+        ) {
+          return "Group 1 and ammonium salts: always soluble.";
+        }
+        if (h.includes("Chloride exception"))
+          return "Chlorides: insoluble with Ag and Pb.";
+        if (h.includes("Chloride"))
+          return "Chlorides: all soluble but Ag and Pb.";
+        if (h.includes("Sulfate exception"))
+          return "Sulfates: insoluble with Ba, Ca, Pb.";
+        if (h.includes("Sulfate"))
+          return "Sulfates: all soluble but Ba, Ca, Pb.";
+        if (h.includes("Carbonate"))
+          return "Carbonates: insoluble except Na, K, NH4.";
+        if (h.includes("Hydroxide"))
+          return "Hydroxides: insoluble except Na, K, NH4.";
+        if (h.includes("sparingly soluble"))
+          return "Calcium hydroxide is only sparingly soluble (treat as insoluble).";
+        return "Use solubility rules.";
+      }
+
+      function reveal() {
+        if (!current) return;
+        els.feedback.innerHTML = `Solubility rule: <b>${ruleSummary(current)}</b>`;
+        els.feedback.className = "feedback";
+      }
+
+      function reset() {
+        if (!confirm("Warning: this will delete all stats. Continue?")) return;
+        perf.clear();
+        score = 0;
+        total = 0;
+        streak = 0;
+        els.score.textContent = "0";
+        els.total.textContent = "0";
+        els.streak.textContent = "0";
+        buildDeck();
+        getNextCard();
+        renderAllCards();
+        clearCookie("solubilityProgress");
+        updateModeOptions();
+      }
+
+      function setCookie(name, value, days = 365) {
+        const d = new Date();
+        d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+        document.cookie = `${name}=${encodeURIComponent(value)}; expires=${d.toUTCString()}; path=/`;
+      }
+      function getCookie(name) {
+        const match = document.cookie.match(
+          new RegExp("(^| )" + name + "=([^;]+)"),
+        );
+        return match ? decodeURIComponent(match[2]) : null;
+      }
+      function clearCookie(name) {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+      }
+
+      function saveProgress() {
+        const perfObj = {};
+        for (const [k, v] of perf.entries()) perfObj[k] = v;
+        const payload = JSON.stringify({ score, total, streak, perf: perfObj });
+        setCookie("solubilityProgress", payload);
+      }
+
+      function loadProgress() {
+        const raw = getCookie("solubilityProgress");
+        if (!raw) return;
+        try {
+          const data = JSON.parse(raw);
+          score = Number(data.score) || 0;
+          total = Number(data.total) || 0;
+          streak = Number(data.streak) || 0;
+          perf.clear();
+          if (data.perf) {
+            Object.entries(data.perf).forEach(([k, v]) => perf.set(k, v));
+          }
+          els.score.textContent = String(score);
+          els.total.textContent = String(total);
+          els.streak.textContent = String(streak);
+        } catch {
+          /* ignore bad cookie */
+        }
+      }
+
+      function fireConfetti() {
+        const count = 14;
+        const colors = ["#22c55e"];
+        for (let i = 0; i < count; i++) {
+          const piece = document.createElement("div");
+          piece.className = "confetti-piece";
+          piece.style.left = `${Math.random() * 90 + 5}%`;
+          piece.style.top = `${Math.random() * 10}%`;
+          piece.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+          piece.style.animationDelay = `${Math.random() * 0.15}s`;
+          els.confetti.appendChild(piece);
+          setTimeout(() => piece.remove(), 900);
+        }
+      }
+
+      function applyTheme(isDark) {
+        document.body.setAttribute("data-theme", isDark ? "dark" : "light");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+      }
+
+      // Events
+      els.btnYes.addEventListener("click", () => answer(true));
+      els.btnNo.addEventListener("click", () => answer(false));
+      els.btnNext.addEventListener("click", () => getNextCard());
+      els.btnReveal.addEventListener("click", () => reveal());
+      els.btnReset.addEventListener("click", () => reset());
+      els.mode.addEventListener("change", () => {
+        updateModeOptions();
+        buildDeck();
+        getNextCard();
+      });
+      els.tabBtnPractice.addEventListener("click", () => setTab("practice"));
+      els.tabBtnAll.addEventListener("click", () => {
+        renderAllCards();
+        setTab("all");
+      });
+      els.darkMode.addEventListener("change", () =>
+        applyTheme(els.darkMode.checked),
+      );
+
+      // Init
+      loadProgress();
+      const savedTheme = localStorage.getItem("theme");
+      const initialDark = savedTheme ? savedTheme === "dark" : false;
+      els.darkMode.checked = initialDark;
+      applyTheme(initialDark);
+      updateModeOptions();
+      buildDeck();
+      getNextCard();
+      renderAllCards();
+    </script>
+  </body>
+</html>
