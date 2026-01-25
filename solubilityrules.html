@@ -340,6 +340,33 @@
         opacity: 0.9;
       }
 
+      .rules-table {
+        margin-top: 8px;
+        border-radius: 14px;
+        border: 1px solid #e6eaf0;
+        overflow: hidden;
+        background: #fff;
+      }
+      .rules-table table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      .rules-table th,
+      .rules-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #eef2f7;
+        text-align: left;
+      }
+      body[data-theme="dark"] .rules-table {
+        background: #0f172a;
+        border-color: #1f2937;
+      }
+      body[data-theme="dark"] .rules-table th,
+      body[data-theme="dark"] .rules-table td {
+        border-bottom-color: #1f2937;
+      }
+
       body[data-theme="dark"] {
         background: #0b1220;
         color: #e5e7eb;
@@ -412,6 +439,15 @@
           >
             All Cards
           </button>
+          <button
+            class="tab-btn"
+            id="tabBtnRules"
+            role="tab"
+            aria-controls="tabRules"
+            aria-selected="false"
+          >
+            Rules
+          </button>
         </div>
 
         <section id="tabPractice" class="tab-panel active" role="tabpanel">
@@ -470,7 +506,6 @@
         </section>
 
         <section id="tabAll" class="tab-panel" role="tabpanel">
-          <p class="sub">All cards with progress and accuracy.</p>
           <div class="allcards">
             <table>
               <thead>
@@ -491,6 +526,55 @@
             <button class="danger" id="btnReset">Reset stats</button>
           </div>
           <div class="danger-note">Warning: this will delete all stats.</div>
+        </section>
+
+        <section id="tabRules" class="tab-panel" role="tabpanel">
+          <div class="rules-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Salts</th>
+                  <th>Soluble</th>
+                  <th>Insoluble</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sodium, potassium and ammonium</td>
+                  <td>All</td>
+                  <td>None</td>
+                </tr>
+                <tr>
+                  <td>Nitrates</td>
+                  <td>All</td>
+                  <td>None</td>
+                </tr>
+                <tr>
+                  <td>Chlorides</td>
+                  <td>Most are soluble</td>
+                  <td>Silver and lead(II)</td>
+                </tr>
+                <tr>
+                  <td>Sulfates</td>
+                  <td>Most are soluble</td>
+                  <td>Barium, calcium and lead(II)</td>
+                </tr>
+                <tr>
+                  <td>Carbonates</td>
+                  <td>Carbonates of sodium, potassium and ammonium</td>
+                  <td>Most are insoluble</td>
+                </tr>
+                <tr>
+                  <td>Hydroxides</td>
+                  <td>
+                    Hydroxides of sodium, potassium and ammonium
+                    (calcium hydroxide is sparingly soluble)
+                  </td>
+                  <td>Most are insoluble</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <div id="confetti" aria-hidden="true"></div>
@@ -644,8 +728,10 @@
         mode: document.getElementById("mode"),
         tabBtnPractice: document.getElementById("tabBtnPractice"),
         tabBtnAll: document.getElementById("tabBtnAll"),
+        tabBtnRules: document.getElementById("tabBtnRules"),
         tabPractice: document.getElementById("tabPractice"),
         tabAll: document.getElementById("tabAll"),
+        tabRules: document.getElementById("tabRules"),
         allCardsBody: document.getElementById("allCardsBody"),
         confetti: document.getElementById("confetti"),
         darkMode: document.getElementById("darkMode"),
@@ -812,14 +898,20 @@
 
       function setTab(which) {
         const isPractice = which === "practice";
+        const isAll = which === "all";
+        const isRules = which === "rules";
         els.tabPractice.classList.toggle("active", isPractice);
-        els.tabAll.classList.toggle("active", !isPractice);
+        els.tabAll.classList.toggle("active", isAll);
+        els.tabRules.classList.toggle("active", isRules);
         els.tabBtnPractice.classList.toggle("active", isPractice);
-        els.tabBtnAll.classList.toggle("active", !isPractice);
+        els.tabBtnAll.classList.toggle("active", isAll);
+        els.tabBtnRules.classList.toggle("active", isRules);
         els.tabBtnPractice.setAttribute("aria-selected", String(isPractice));
-        els.tabBtnAll.setAttribute("aria-selected", String(!isPractice));
+        els.tabBtnAll.setAttribute("aria-selected", String(isAll));
+        els.tabBtnRules.setAttribute("aria-selected", String(isRules));
       }
 
+      // --- Summary of solubility rules based on hint text ---
       function ruleSummary(card) {
         const h = card.h || "";
         if (h.includes("Nitrate")) return "Nitrates: always soluble.";
@@ -948,6 +1040,7 @@
         renderAllCards();
         setTab("all");
       });
+      els.tabBtnRules.addEventListener("click", () => setTab("rules"));
       els.darkMode.addEventListener("change", () =>
         applyTheme(els.darkMode.checked),
       );
@@ -955,7 +1048,7 @@
       // Init
       loadProgress();
       const savedTheme = localStorage.getItem("theme");
-      const initialDark = savedTheme ? savedTheme === "dark" : false;
+      const initialDark = savedTheme ? savedTheme === "dark" : true;
       els.darkMode.checked = initialDark;
       applyTheme(initialDark);
       updateModeOptions();
