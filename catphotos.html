@@ -115,11 +115,33 @@
 
       .photo-button {
         display: block;
+        position: relative;
         width: 100%;
         padding: 0;
         border: 0;
         background: transparent;
         cursor: zoom-in;
+      }
+
+      .photo-loader {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: rgba(243, 223, 188, 0.75);
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+      }
+
+      .photo-loader img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .card.is-loaded .photo-loader {
+        opacity: 0;
+        visibility: hidden;
       }
 
       .photo {
@@ -478,6 +500,30 @@
       const lightboxImage = document.getElementById("lightboxImage");
       const lightboxClose = document.getElementById("lightboxClose");
       const photoButtons = document.querySelectorAll(".photo-button");
+      const photos = document.querySelectorAll(".photo");
+
+      photoButtons.forEach((button) => {
+        const loader = document.createElement("span");
+        loader.className = "photo-loader";
+        loader.setAttribute("aria-hidden", "true");
+        loader.innerHTML = '<img src="Images/loading.gif" alt="" />';
+        button.appendChild(loader);
+      });
+
+      photos.forEach((photo) => {
+        const card = photo.closest(".card");
+        const markLoaded = () => {
+          card.classList.add("is-loaded");
+        };
+
+        if (photo.complete && photo.naturalWidth > 0) {
+          markLoaded();
+          return;
+        }
+
+        photo.addEventListener("load", markLoaded, { once: true });
+        photo.addEventListener("error", markLoaded, { once: true });
+      });
 
       function openLightbox(src, alt) {
         lightboxImage.src = src;
