@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ms. Wong Cat Photos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Manrope:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1b2d2a;
+        --paper: #fff8ea;
+        --warm: #f5b349;
+        --cool: #2a8f86;
+        --soft: #f3dfbc;
+        --panel: rgba(255, 248, 234, 0.86);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Manrope", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 14% 18%, rgba(245, 179, 73, 0.28), transparent 30%),
+          radial-gradient(circle at 82% 8%, rgba(42, 143, 134, 0.25), transparent 34%),
+          linear-gradient(160deg, #fff8ea 0%, #f7e9cd 44%, #f4e3bf 100%);
+        min-height: 100vh;
+      }
+
+      .backdrop {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(27, 45, 42, 0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(27, 45, 42, 0.06) 1px, transparent 1px);
+        background-size: 22px 22px;
+        mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
+      }
+
+      .wrap {
+        width: min(1100px, 92vw);
+        margin: 0 auto;
+        padding: 3rem 0 4rem;
+      }
+
+      header {
+        background: var(--panel);
+        border: 2px solid rgba(27, 45, 42, 0.14);
+        border-radius: 24px;
+        padding: 1.4rem 1.6rem;
+        box-shadow: 0 10px 28px rgba(27, 45, 42, 0.12);
+        backdrop-filter: blur(3px);
+      }
+
+      .eyebrow {
+        margin: 0;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--cool);
+        font-size: 0.78rem;
+      }
+
+      h1 {
+        margin: 0.45rem 0 0.5rem;
+        font-family: "Fraunces", Georgia, serif;
+        font-size: clamp(2rem, 3.2vw, 3rem);
+        line-height: 1.1;
+      }
+
+      .sub {
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .gallery {
+        margin-top: 1.6rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.1rem;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 2px solid rgba(27, 45, 42, 0.1);
+        border-radius: 18px;
+        padding: 0.65rem;
+        box-shadow: 0 8px 20px rgba(27, 45, 42, 0.12);
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+        animation: popIn 0.6s ease forwards;
+      }
+
+      .card:nth-child(2) { animation-delay: 0.05s; }
+      .card:nth-child(3) { animation-delay: 0.1s; }
+      .card:nth-child(4) { animation-delay: 0.15s; }
+      .card:nth-child(5) { animation-delay: 0.2s; }
+      .card:nth-child(6) { animation-delay: 0.25s; }
+
+      .photo {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: 12px;
+        border: 2px solid rgba(27, 45, 42, 0.12);
+        background: var(--soft);
+      }
+
+      .caption {
+        margin: 0.6rem 0 0.2rem;
+        font-weight: 700;
+        font-size: 0.95rem;
+      }
+
+      .meta {
+        margin: 0;
+        font-size: 0.82rem;
+        color: rgba(27, 45, 42, 0.72);
+      }
+
+      .actions {
+        margin-top: 1.4rem;
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
+
+      .button {
+        text-decoration: none;
+        display: inline-block;
+        padding: 0.68rem 0.95rem;
+        border-radius: 999px;
+        border: 2px solid rgba(27, 45, 42, 0.2);
+        color: var(--ink);
+        background: var(--panel);
+        font-weight: 700;
+        transition: transform 0.15s ease, background 0.15s ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        background: #fff2d8;
+      }
+
+      @keyframes popIn {
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .wrap {
+          padding-top: 1.6rem;
+        }
+
+        header {
+          padding: 1.05rem;
+        }
+
+        .gallery {
+          gap: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true"></div>
+
+    <main class="wrap">
+      <header>
+        <p class="eyebrow">Photo Collection</p>
+        <h1>Ms. Wong Cat Photos</h1>
+        <p class="sub">A dedicated gallery page for all cat images in this site.</p>
+      </header>
+
+      <section class="gallery" aria-label="Cat photo gallery">
+        <article class="card">
+          <img class="photo" src="Images/404cat.jpg" alt="Cat photo from 404 page" loading="lazy" />
+          <p class="caption">404 Cat</p>
+          <p class="meta">Images/404cat.jpg</p>
+        </article>
+
+        <article class="card">
+          <img class="photo" src="Images/coolcat.jpg" alt="Cool cat wearing sunglasses" loading="lazy" />
+          <p class="caption">Cool Cat</p>
+          <p class="meta">Images/coolcat.jpg</p>
+        </article>
+
+        <article class="card">
+          <img class="photo" src="Images/manycats.png" alt="Many cats grouped together" loading="lazy" />
+          <p class="caption">Many Cats</p>
+          <p class="meta">Images/manycats.png</p>
+        </article>
+
+        <article class="card">
+          <img class="photo" src="Images/stackedcats.png" alt="Cats stacked in a playful arrangement" loading="lazy" />
+          <p class="caption">Stacked Cats</p>
+          <p class="meta">Images/stackedcats.png</p>
+        </article>
+
+        <article class="card">
+          <img class="photo" src="Images/thankyou.webp" alt="Thank-you themed cat image" loading="lazy" />
+          <p class="caption">Thank You Cat</p>
+          <p class="meta">Images/thankyou.webp</p>
+        </article>
+
+        <article class="card">
+          <img class="photo" src="Images/loading.gif" alt="Animated loading cat" loading="lazy" />
+          <p class="caption">Loading Cat</p>
+          <p class="meta">Images/loading.gif</p>
+        </article>
+      </section>
+
+      <div class="actions">
+        <a class="button" href="index.html">Back to Home</a>
+      </div>
+    </main>
+  </body>
+</html>
