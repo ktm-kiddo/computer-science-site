@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -29,8 +29,16 @@
         font-family: "Manrope", "Segoe UI", sans-serif;
         color: var(--ink);
         background:
-          radial-gradient(circle at 14% 18%, rgba(245, 179, 73, 0.28), transparent 30%),
-          radial-gradient(circle at 82% 8%, rgba(42, 143, 134, 0.25), transparent 34%),
+          radial-gradient(
+            circle at 14% 18%,
+            rgba(245, 179, 73, 0.28),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 82% 8%,
+            rgba(42, 143, 134, 0.25),
+            transparent 34%
+          ),
           linear-gradient(160deg, #fff8ea 0%, #f7e9cd 44%, #f4e3bf 100%);
         min-height: 100vh;
       }
@@ -43,7 +51,11 @@
           linear-gradient(rgba(27, 45, 42, 0.06) 1px, transparent 1px),
           linear-gradient(90deg, rgba(27, 45, 42, 0.06) 1px, transparent 1px);
         background-size: 22px 22px;
-        mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
+        mask-image: radial-gradient(
+          circle at center,
+          black 35%,
+          transparent 90%
+        );
       }
 
       .wrap {
@@ -158,7 +170,9 @@
         color: var(--ink);
         background: var(--panel);
         font-weight: 700;
-        transition: transform 0.15s ease, background 0.15s ease;
+        transition:
+          transform 0.15s ease,
+          background 0.15s ease;
       }
 
       .button:hover {
@@ -239,74 +253,194 @@
 
       <section class="gallery" aria-label="Cat photo gallery">
         <article class="card">
-          <button class="photo-button" type="button" data-full="Images/Ms_Wong_Cat_Photos/DSCF2697.jpeg" data-alt="Cat photo DSCF2697">
-            <img class="photo" src="Images/Ms_Wong_Cat_Photos/DSCF2697.jpeg" alt="Cat photo DSCF2697" loading="lazy" />
+          <button
+            class="photo-button"
+            type="button"
+            data-full="Images/Ms_Wong_Cat_Photos/DSCF2697.jpeg"
+            data-alt="Cat photo DSCF2697"
+          >
+            <img
+              class="photo"
+              src="Images/Ms_Wong_Cat_Photos/DSCF2697.jpeg"
+              alt="Cat photo DSCF2697"
+              loading="lazy"
+            />
           </button>
         </article>
 
         <article class="card">
-          <button class="photo-button" type="button" data-full="Images/Ms_Wong_Cat_Photos/DSCF2707.jpeg" data-alt="Cat photo DSCF2707">
-            <img class="photo" src="Images/Ms_Wong_Cat_Photos/DSCF2707.jpeg" alt="Cat photo DSCF2707" loading="lazy" />
+          <button
+            class="photo-button"
+            type="button"
+            data-full="Images/Ms_Wong_Cat_Photos/DSCF2707.jpeg"
+            data-alt="Cat photo DSCF2707"
+          >
+            <img
+              class="photo"
+              src="Images/Ms_Wong_Cat_Photos/DSCF2707.jpeg"
+              alt="Cat photo DSCF2707"
+              loading="lazy"
+            />
           </button>
         </article>
 
         <article class="card">
-          <button class="photo-button" type="button" data-full="Images/Ms_Wong_Cat_Photos/DSCF2981.jpeg" data-alt="Cat photo DSCF2981">
-            <img class="photo" src="Images/Ms_Wong_Cat_Photos/DSCF2981.jpeg" alt="Cat photo DSCF2981" loading="lazy" />
+          <button
+            class="photo-button"
+            type="button"
+            data-full="Images/Ms_Wong_Cat_Photos/DSCF2981.jpeg"
+            data-alt="Cat photo DSCF2981"
+          >
+            <img
+              class="photo"
+              src="Images/Ms_Wong_Cat_Photos/DSCF2981.jpeg"
+              alt="Cat photo DSCF2981"
+              loading="lazy"
+            />
           </button>
         </article>
 
         <article class="card">
-          <button class="photo-button" type="button" data-full="Images/Ms_Wong_Cat_Photos/DSCF2991.jpeg" data-alt="Cat photo DSCF2991">
-            <img class="photo" src="Images/Ms_Wong_Cat_Photos/DSCF2991.jpeg" alt="Cat photo DSCF2991" loading="lazy" />
+          <button
+            class="photo-button"
+            type="button"
+            data-full="Images/Ms_Wong_Cat_Photos/DSCF2991.jpeg"
+            data-alt="Cat photo DSCF2991"
+          >
+            <img
+              class="photo"
+              src="Images/Ms_Wong_Cat_Photos/DSCF2991.jpeg"
+              alt="Cat photo DSCF2991"
+              loading="lazy"
+            />
           </button>
         </article>
 
         <article class="card">
-          <button class="photo-button" type="button" data-full="Images/Ms_Wong_Cat_Photos/IMG_0158.jpeg" data-alt="Cat photo IMG 0158">
-            <img class="photo" src="Images/Ms_Wong_Cat_Photos/IMG_0158.jpeg" alt="Cat photo IMG 0158" loading="lazy" />
+          <button
+            class="photo-button"
+            type="button"
+            data-full="Images/Ms_Wong_Cat_Photos/IMG_0158.jpeg"
+            data-alt="Cat photo IMG 0158"
+          >
+            <img
+              class="photo"
+              src="Images/Ms_Wong_Cat_Photos/IMG_0158.jpeg"
+              alt="Cat photo IMG 0158"
+              loading="lazy"
+            />
           </button>
         </article>
 
         <article class="card">
-          <button class="photo-button" type="button" data-full="Images/Ms_Wong_Cat_Photos/IMG_0278.jpeg" data-alt="Cat photo IMG 0278">
-            <img class="photo" src="Images/Ms_Wong_Cat_Photos/IMG_0278.jpeg" alt="Cat photo IMG 0278" loading="lazy" />
+          <button
+            class="photo-button"
+            type="button"
+            data-full="Images/Ms_Wong_Cat_Photos/IMG_0278.jpeg"
+            data-alt="Cat photo IMG 0278"
+          >
+            <img
+              class="photo"
+              src="Images/Ms_Wong_Cat_Photos/IMG_0278.jpeg"
+              alt="Cat photo IMG 0278"
+              loading="lazy"
+            />
           </button>
         </article>
 
         <article class="card">
-          <button class="photo-button" type="button" data-full="Images/Ms_Wong_Cat_Photos/IMG_0358.jpeg" data-alt="Cat photo IMG 0358">
-            <img class="photo" src="Images/Ms_Wong_Cat_Photos/IMG_0358.jpeg" alt="Cat photo IMG 0358" loading="lazy" />
+          <button
+            class="photo-button"
+            type="button"
+            data-full="Images/Ms_Wong_Cat_Photos/IMG_0358.jpeg"
+            data-alt="Cat photo IMG 0358"
+          >
+            <img
+              class="photo"
+              src="Images/Ms_Wong_Cat_Photos/IMG_0358.jpeg"
+              alt="Cat photo IMG 0358"
+              loading="lazy"
+            />
           </button>
         </article>
 
         <article class="card">
-          <button class="photo-button" type="button" data-full="Images/Ms_Wong_Cat_Photos/IMG_3042.jpeg" data-alt="Cat photo IMG 3042">
-            <img class="photo" src="Images/Ms_Wong_Cat_Photos/IMG_3042.jpeg" alt="Cat photo IMG 3042" loading="lazy" />
+          <button
+            class="photo-button"
+            type="button"
+            data-full="Images/Ms_Wong_Cat_Photos/IMG_3042.jpeg"
+            data-alt="Cat photo IMG 3042"
+          >
+            <img
+              class="photo"
+              src="Images/Ms_Wong_Cat_Photos/IMG_3042.jpeg"
+              alt="Cat photo IMG 3042"
+              loading="lazy"
+            />
           </button>
         </article>
 
         <article class="card">
-          <button class="photo-button" type="button" data-full="Images/Ms_Wong_Cat_Photos/IMG_3237.jpeg" data-alt="Cat photo IMG 3237">
-            <img class="photo" src="Images/Ms_Wong_Cat_Photos/IMG_3237.jpeg" alt="Cat photo IMG 3237" loading="lazy" />
+          <button
+            class="photo-button"
+            type="button"
+            data-full="Images/Ms_Wong_Cat_Photos/IMG_3237.jpeg"
+            data-alt="Cat photo IMG 3237"
+          >
+            <img
+              class="photo"
+              src="Images/Ms_Wong_Cat_Photos/IMG_3237.jpeg"
+              alt="Cat photo IMG 3237"
+              loading="lazy"
+            />
           </button>
         </article>
 
         <article class="card">
-          <button class="photo-button" type="button" data-full="Images/Ms_Wong_Cat_Photos/IMG_3286.jpeg" data-alt="Cat photo IMG 3286">
-            <img class="photo" src="Images/Ms_Wong_Cat_Photos/IMG_3286.jpeg" alt="Cat photo IMG 3286" loading="lazy" />
+          <button
+            class="photo-button"
+            type="button"
+            data-full="Images/Ms_Wong_Cat_Photos/IMG_3286.jpeg"
+            data-alt="Cat photo IMG 3286"
+          >
+            <img
+              class="photo"
+              src="Images/Ms_Wong_Cat_Photos/IMG_3286.jpeg"
+              alt="Cat photo IMG 3286"
+              loading="lazy"
+            />
           </button>
         </article>
 
         <article class="card">
-          <button class="photo-button" type="button" data-full="Images/Ms_Wong_Cat_Photos/IMG_3705.jpeg" data-alt="Cat photo IMG 3705">
-            <img class="photo" src="Images/Ms_Wong_Cat_Photos/IMG_3705.jpeg" alt="Cat photo IMG 3705" loading="lazy" />
+          <button
+            class="photo-button"
+            type="button"
+            data-full="Images/Ms_Wong_Cat_Photos/IMG_3705.jpeg"
+            data-alt="Cat photo IMG 3705"
+          >
+            <img
+              class="photo"
+              src="Images/Ms_Wong_Cat_Photos/IMG_3705.jpeg"
+              alt="Cat photo IMG 3705"
+              loading="lazy"
+            />
           </button>
         </article>
 
         <article class="card">
-          <button class="photo-button" type="button" data-full="Images/Ms_Wong_Cat_Photos/IMG_4162.jpeg" data-alt="Cat photo IMG 4162">
-            <img class="photo" src="Images/Ms_Wong_Cat_Photos/IMG_4162.jpeg" alt="Cat photo IMG 4162" loading="lazy" />
+          <button
+            class="photo-button"
+            type="button"
+            data-full="Images/Ms_Wong_Cat_Photos/IMG_4162.jpeg"
+            data-alt="Cat photo IMG 4162"
+          >
+            <img
+              class="photo"
+              src="Images/Ms_Wong_Cat_Photos/IMG_4162.jpeg"
+              alt="Cat photo IMG 4162"
+              loading="lazy"
+            />
           </button>
         </article>
       </section>
@@ -316,51 +450,64 @@
       </div>
     </main>
 
-    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded cat photo">
-      <button class="lightbox-close" type="button" id="lightboxClose" aria-label="Close photo viewer">x</button>
+    <div
+      class="lightbox"
+      id="lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Expanded cat photo"
+    >
+      <button
+        class="lightbox-close"
+        type="button"
+        id="lightboxClose"
+        aria-label="Close photo viewer"
+      >
+        x
+      </button>
       <img id="lightboxImage" src="" alt="Expanded cat photo" />
     </div>
 
     <script>
-      const cards = document.querySelectorAll('.card');
+      const cards = document.querySelectorAll(".card");
       cards.forEach((card, index) => {
         card.style.animationDelay = `${index * 0.05}s`;
       });
 
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImage = document.getElementById('lightboxImage');
-      const lightboxClose = document.getElementById('lightboxClose');
-      const photoButtons = document.querySelectorAll('.photo-button');
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImage = document.getElementById("lightboxImage");
+      const lightboxClose = document.getElementById("lightboxClose");
+      const photoButtons = document.querySelectorAll(".photo-button");
 
       function openLightbox(src, alt) {
         lightboxImage.src = src;
         lightboxImage.alt = alt;
-        lightbox.classList.add('open');
-        document.body.style.overflow = 'hidden';
+        lightbox.classList.add("open");
+        document.body.style.overflow = "hidden";
       }
 
       function closeLightbox() {
-        lightbox.classList.remove('open');
-        lightboxImage.src = '';
-        document.body.style.overflow = '';
+        lightbox.classList.remove("open");
+        lightboxImage.src = "";
+        document.body.style.overflow = "";
       }
 
       photoButtons.forEach((button) => {
-        button.addEventListener('click', () => {
+        button.addEventListener("click", () => {
           openLightbox(button.dataset.full, button.dataset.alt);
         });
       });
 
-      lightboxClose.addEventListener('click', closeLightbox);
+      lightboxClose.addEventListener("click", closeLightbox);
 
-      lightbox.addEventListener('click', (event) => {
+      lightbox.addEventListener("click", (event) => {
         if (event.target === lightbox) {
           closeLightbox();
         }
       });
 
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && lightbox.classList.contains('open')) {
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && lightbox.classList.contains("open")) {
           closeLightbox();
         }
       });
